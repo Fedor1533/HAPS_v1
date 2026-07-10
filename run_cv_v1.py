@@ -1,4 +1,5 @@
 import argparse, os, sys
+import time
 import pandas as pd
 
 sys.path.append('/beegfs/home/f.gubanov/f.gubanov/bimai_lab/metrics_code_v2')
@@ -21,9 +22,11 @@ def main():
     dataset = SimpleDataset(args.csv, dist_col='Similarity_Score', class_col='class3', return_meta=True)
     print(f"Loaded dataset: {len(dataset)}")
 
+    t0 = time.time()
     print("\nStarted nested CV:\n")
     oof_preds, fold_meta, meta_df = run_outer_cv(dataset, identities=identities, outer_seed=args.outer_seed)
-    print("\nFinished nested CV.\n")
+    elapsed = time.time() - t0
+    print(f"\nFinished nested CV in {elapsed:.1f}s.\n")
 
     fm_df = pd.DataFrame(fold_meta).sort_values(by='metric')
     fm_df = add_preproc_key(fm_df)
