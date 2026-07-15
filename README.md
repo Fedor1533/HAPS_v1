@@ -2,12 +2,27 @@
 
 Инструмент для оценки качества метрик структурной пригодности H&E–HER2 пар через nested WSI-grouped cross-validation.
 
-## Быстрый старт: запустить существующие метрики
+## Файлы
+
+| Файл | Назначение |
+|------|-----------|
+| `nested_cv_metrics_opt.py` | **Рекомендуемая версия.** Поддерживает sequential (`n_jobs=1`) и parallel (`n_jobs>1`) outer folds через `ProcessPoolExecutor(spawn)` |
+| `nested_cv_metrics.py` | Стабильная sequential-версия (без изменений протокола) |
+| `run_cv_v1.py` | CLI-скрипт для запуска (использует `nested_cv_metrics_opt`) |
+
+## Быстрый старт
 
 ```bash
+# Последовательно
 python run_cv_v1.py \
     --identities "ncc,psnr,mi,ssim" \
     --output results/my_run.pkl
+
+# Параллельно (4 воркера)
+python run_cv_v1.py \
+    --identities "ncc,psnr,mi,ssim" \
+    --output results/my_run.pkl \
+    --n-jobs 4
 ```
 
 Аргументы:
@@ -18,21 +33,24 @@ python run_cv_v1.py \
 | `--csv` | `filtration_imgs/exp_full.csv` | Путь к CSV с данными |
 | `--output` | **обязательный** | Путь к `.pkl` с результатами |
 | `--outer-seed` | `155` | Random seed для outer CV |
+| `--n-jobs` | `1` | Параллельные outer folds: `1` = последовательно, `2-5` = параллельно |
 
-Результат — `.pkl` с четырьмя полями: `oof_predictions`, `fold_meta`, `meta_df`, `run_info`.
+**Примечание по `--n-jobs`**: для GPU-метрик (lpips_*, dists) несколько воркеров на одном GPU вызывают замедление. Для CPU-метрик (ncc, psnr, mi, ssim, ms-ssim) — почти линейное ускорение.
+
+Результат — `.pkl` с полями: `oof_predictions`, `fold_meta`, `meta_df`, `run_info`.
 
 ---
 
 ## Добавление своей метрики
 
-Все изменения — в `nested_cv_metrics.py`. Три шага:
+Все изменения — в `nested_cv_metrics_opt.py`. Три шага:
 
 ### Шаг 1. Написать функцию подсчёта метрики
 
 Функция принимает тензоры `(1, C, H, W) float [0, 1]` и **возвращает distance** (меньше — лучше):
 
 ```python
-# Можно добавить в scripts/metrics.py или прямо в nested_cv_metrics.py
+# Можно добавить в scripts/metrics.py или прямо в nested_cv_metrics_opt.py
 
 def calc_my_metric(src_t, trg_t, my_model, **kw):
     """
@@ -50,7 +68,7 @@ def calc_my_metric(src_t, trg_t, my_model, **kw):
 
 ### Шаг 2. Зарегистрировать identity и маппинг
 
-В `nested_cv_metrics.py` найти секции `METRIC_IDENTITIES` и `METRICS_MAP`:
+В `nested_cv_metrics_opt.py` найти секции `METRIC_IDENTITIES` и `METRICS_MAP`:
 
 ```python
 # --- Инициализация модели (лениво или при импорте) ---
@@ -80,7 +98,7 @@ METRICS_MAP["my_metric"] = lambda inp, **kw: -calc_my_metric(inp.src_t, inp.trg_
 ### Шаг 3. Запустить
 
 ```bash
-python run_cv_v1.py --identities "my_metric" --output results/my_metric.pkl
+python run_cv_v1.py --identities "my_metric" --output results/my_metric.pkl --n-jobs 4
 ```
 
 ---
@@ -89,7 +107,7 @@ python run_cv_v1.py --identities "my_metric" --output results/my_metric.pkl
 
 ```python
 import pandas as pd
-from nested_cv_metrics import load_artifact, evaluate_oof, bootstrap_oof, add_preproc_key
+from nested_cv_metrics_opt import load_artifact, evaluate_oof, bootstrap_oof, add_preproc_key
 
 oof_preds, fold_meta, meta_df, run_info = load_artifact("results/my_metric.pkl")
 
@@ -114,11 +132,11 @@ print(fm_df.groupby("metric")["preproc_cfg"].value_counts())
 ```
 inp.src_np    # np.ndarray (H, W) или (H, W, C) — предобработанное HER2
 inp.trg_np    # np.ndarray — предобработанное H&E
-inp.mask_np   # np.ndarray (H, W) — маска ткани (НЕ ИСПОЛЬЗУЕТСЯ = None)
+inp.mask_np   # np.ndarray (H, W) — маска ткани (не используется, всегда None)
 inp.src_t     # torch.Tensor (1, C, H, W) float [0, 1] — версия для GPU
 inp.trg_t     # torch.Tensor
-inp.mask_t    # torch.Tensor (НЕ ИСПОЛЬЗУЕТСЯ = None)
-inp.bg_val    # float — 0.0 если flip_intensity=True, иначе 1.0 (НЕ ИСПОЛЬЗУЕТСЯ = None)
+inp.mask_t    # torch.Tensor (не используется, всегда None)
+inp.bg_val    # float — 0.0 если flip_intensity=True, иначе 1.0
 ```
 
 Классические метрики (NCC, PSNR, MI, SSIM) используют `src_np, trg_np`.  
@@ -128,10 +146,10 @@ inp.bg_val    # float — 0.0 если flip_intensity=True, иначе 1.0 (НЕ
 
 ## Как устроен протокол
 
-1. **Outer CV**: 5-fold StratifiedGroupKFold по WSI (стратификация по class3)
+1. **Outer CV**: 5-fold StratifiedGroupKFold по WSI (стратификация по class3). При `n_jobs > 1` folds выполняются параллельно через `ProcessPoolExecutor(spawn)`
 2. **Inner CV** (внутри каждого outer fold): 4-fold StratifiedGroupKFold на outer_train
-3. **Выбор конфига**: для каждой metric перебираются все комбинации `COMMON_FLAGS × channel_mode × params`. Лучший конфиг — по Spearman (inner CV), tie-break — AUC Bad vs Rest
-4. **OOF predictions**: выбранный конфиг применяется к outer_val → собираются предсказания по всем 522 парам
+3. **Выбор конфига**: для каждой metric identity перебираются все комбинации `COMMON_FLAGS × channel_mode × params`. Лучший конфиг — по Spearman (inner CV), tie-break — AUC Bad vs Rest
+4. **OOF predictions**: выбранный конфиг применяется к outer_val → собираются предсказания по всем парам
 5. **Primary метрики**: Spearman vs class3, AUROC Bad vs Rest
 6. **Bootstrap**: WSI-level семплирование для CI95
 
