@@ -136,7 +136,7 @@ inp.mask_np   # np.ndarray (H, W) — маска ткани (не использ
 inp.src_t     # torch.Tensor (1, C, H, W) float [0, 1] — версия для GPU
 inp.trg_t     # torch.Tensor
 inp.mask_t    # torch.Tensor (не используется, всегда None)
-inp.bg_val    # float — 0.0 если flip_intensity=True, иначе 1.0
+inp.bg_val    # float — 0.0 если flip_intensity=True, иначе 1.0 (не используется, всегда 0.0)
 ```
 
 Классические метрики (NCC, PSNR, MI, SSIM) используют `src_np, trg_np`.  
