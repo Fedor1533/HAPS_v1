@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# uv / venv
+.venv/
+
+# Результаты экспериментов и отчёты (крупные артефакты не коммитим)
+results/
+*.pkl
+*_analysis/
+reports/
+
+# Slurm-логи
+logs/
+slurm/*.out
+slurm/*.err
+
+# TransPath: код модели и веса подтягиваются локально (см. scripts/setup_transpath.sh)
+TransPath/
+*.pth

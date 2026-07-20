@@ -21,6 +21,18 @@ def main():
     identities = args.identities.split(",")
     print(f"Run CV for specified metrics: {identities}")
 
+    # Не перезаписываем существующие результаты: чтобы пересчитать — удалите .pkl вручную.
+    if os.path.exists(args.output):
+        print(
+            f"SKIP: output already exists: {args.output}\n"
+            f"  Удалите файл вручную, если хотите перезапустить эксперимент."
+        )
+        sys.exit(0)
+
+    out_dir = os.path.dirname(os.path.abspath(args.output))
+    if out_dir:
+        os.makedirs(out_dir, exist_ok=True)
+
     dataset = SimpleDataset(args.csv, dist_col='Similarity_Score', class_col='class3', return_meta=True)
     print(f"Loaded dataset: {len(dataset)}")
 

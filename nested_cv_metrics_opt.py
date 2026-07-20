@@ -58,6 +58,43 @@ def _make_lpips_wrapper(backbone):
     return wrapper
 
 # ---------------------------------------------------------------------------
+# Глубокие метрики из vs-filtering (Cellpose / LPIPS-Cellpose / TransPath) — ленивые
+# ---------------------------------------------------------------------------
+from scripts.deep_metrics import (
+    CellposeEncoder,
+    LPIPSCellpose,
+    _load_ctranspath,
+    calc_cellpose,
+    calc_lpips_cellpose,
+    calc_transpath,
+)
+
+_CELLPOSE_ENCODER = None
+_LPIPS_CELLPOSE_MODEL = None
+_TRANSPATH_MODEL = None
+
+
+def _get_cellpose_encoder():
+    global _CELLPOSE_ENCODER
+    if _CELLPOSE_ENCODER is None:
+        _CELLPOSE_ENCODER = CellposeEncoder(model_type="cyto2", device=device)
+    return _CELLPOSE_ENCODER
+
+
+def _get_lpips_cellpose_model():
+    global _LPIPS_CELLPOSE_MODEL
+    if _LPIPS_CELLPOSE_MODEL is None:
+        _LPIPS_CELLPOSE_MODEL = LPIPSCellpose(model_type="cyto2", device=device)
+    return _LPIPS_CELLPOSE_MODEL
+
+
+def _get_transpath_model():
+    global _TRANSPATH_MODEL
+    if _TRANSPATH_MODEL is None:
+        _TRANSPATH_MODEL = _load_ctranspath(device, weights_path=None, repo_root=None)
+    return _TRANSPATH_MODEL
+
+# ---------------------------------------------------------------------------
 # Утилиты (из старого test_metrics.py)
 # ---------------------------------------------------------------------------
 
@@ -148,6 +185,23 @@ METRIC_IDENTITIES = {
     "dists": {
         "channel_mode": ["gray", "hed", "rgb"],
     },
+    # --- Глубокие метрики из vs-filtering ---
+    "lpips_cellpose": {
+        "channel_mode": ["gray", "hed", "rgb"],
+    },
+    "cellpose": {
+        "channel_mode": ["gray", "hed", "rgb"],
+        "params": {
+            "feature": ["neck", "mean"],
+            "agg": ["cos", "dist"],
+        },
+    },
+    "transpath": {
+        "channel_mode": ["rgb", "hed"],
+        "params": {
+            "agg": ["cos", "dist"],
+        },
+    },
 }
 
 METRICS_MAP = {
@@ -162,6 +216,10 @@ METRICS_MAP = {
     "lpips_vgg":     _make_lpips_wrapper("vgg"),
     "lpips_squeeze": _make_lpips_wrapper("squeeze"),
     "dists":         lambda inp, **kw: -calc_dists(inp.src_t, inp.trg_t, None, 0.0, _get_dists_model()),
+    # --- Глубокие метрики из vs-filtering (все calc_* возвращают similarity) ---
+    "lpips_cellpose": lambda inp, **kw: calc_lpips_cellpose(inp.src_t, inp.trg_t, _get_lpips_cellpose_model()),
+    "cellpose":       lambda inp, feature="neck", agg="cos", **kw: calc_cellpose(inp.src_t, inp.trg_t, _get_cellpose_encoder(), feature=feature, agg=agg),
+    "transpath":      lambda inp, agg="cos", **kw: calc_transpath(inp.src_t, inp.trg_t, _get_transpath_model(), agg=agg),
 }
 
 # ---------------------------------------------------------------------------
