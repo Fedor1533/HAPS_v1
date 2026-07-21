@@ -9,6 +9,7 @@ from tqdm import tqdm
 from scipy.stats import spearmanr
 from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import StratifiedGroupKFold
+import scipy
 
 from concurrent.futures import ProcessPoolExecutor
 import multiprocessing as mp
@@ -541,6 +542,23 @@ def run_outer_cv(dataset, identities=None, outer_seed=155, n_jobs=1):
 
 
 # ---------------------------------------------------------------------------
+# Per-fold нормализация OOF predictions (rank → [0, 1])
+# ---------------------------------------------------------------------------
+
+def normalize_oof_per_fold(oof_predictions):
+    """
+    Rank-нормализация similarity_score внутри каждой (metric, fold) пары.
+    Решает проблему несопоставимого масштаба между фолдами (например, lin vs avg в LPIPS).
+    Spearman/AUC инвариантны к этой трансформации внутри fold.
+    """
+    df = pd.DataFrame(oof_predictions)
+    df["similarity_score"] = df.groupby(["metric", "fold"])["similarity_score"].transform(
+        lambda x: (scipy.stats.rankdata(x) - 1) / (len(x) - 1) if len(x) > 1 else x
+    )
+    return df.to_dict("records")
+
+
+# ---------------------------------------------------------------------------
 # OOF агрегация: финальные метрики по всем парам
 # ---------------------------------------------------------------------------
 
@@ -579,7 +597,7 @@ def evaluate_oof(oof_predictions, meta_df):
 
 # ---------------------------------------------------------------------------
 # WSI Bootstrap на OOF predictions
-# ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------/uno
 
 def bootstrap_oof(oof_predictions, meta_df, n_boot=1000, seed=143):
     """
