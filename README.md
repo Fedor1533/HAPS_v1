@@ -107,15 +107,20 @@ python run_cv_v1.py --identities "my_metric" --output results/my_metric.pkl --n-
 
 ```python
 import pandas as pd
-from nested_cv_metrics_opt import load_artifact, evaluate_oof, bootstrap_oof, add_preproc_key
+from nested_cv_metrics_opt import load_artifact, evaluate_oof, bootstrap_oof, add_preproc_key, normalize_oof_per_fold
 
 oof_preds, fold_meta, meta_df, run_info = load_artifact("results/my_metric.pkl")
 
+# Для deep метрик (LPIPS/DISTS/...) — per-fold rank-нормализация.
+# Решает проблему разного масштаба scores между фолдами (например, lin vs avg в LPIPS).
+# Для классических метрик (ncc, psnr, ...) нормализация не требуется.
+oof_norm = normalize_oof_per_fold(oof_preds)
+
 # Финальные метрики
-results = evaluate_oof(oof_preds, meta_df)
+results = evaluate_oof(oof_norm, meta_df)
 
 # Bootstrap CI
-bs = bootstrap_oof(oof_preds, meta_df, n_boot=1000, seed=143)
+bs = bootstrap_oof(oof_norm, meta_df, n_boot=1000, seed=143)
 
 # Стабильность выбора конфигов по outer folds
 fm_df = pd.DataFrame(fold_meta).sort_values(by='metric')
@@ -150,7 +155,8 @@ inp.bg_val    # float — 0.0 если flip_intensity=True, иначе 1.0 (не
 2. **Inner CV** (внутри каждого outer fold): 4-fold StratifiedGroupKFold на outer_train
 3. **Выбор конфига**: для каждой metric identity перебираются все комбинации `COMMON_FLAGS × channel_mode × params`. Лучший конфиг — по Spearman (inner CV), tie-break — AUC Bad vs Rest
 4. **OOF predictions**: выбранный конфиг применяется к outer_val → собираются предсказания по всем парам
-5. **Primary метрики**: Spearman vs class3, AUROC Bad vs Rest
-6. **Bootstrap**: WSI-level семплирование для CI95
+5. **Per-fold нормализация**: для метрик с config-dependent scale (LPIPS `lin`/`avg`, разный масштаб между фолдами) — rank-нормализация `normalize_oof_per_fold()` перед OOF-оценкой
+6. **Primary метрики**: Spearman vs class3, AUROC Bad vs Rest
+7. **Bootstrap**: WSI-level семплирование для CI95
 
 Метрики с одинаковым search space обрабатываются группой (один preprocess-проход на пару) для оптимизации.
