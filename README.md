@@ -43,6 +43,17 @@ uv run python scripts/analyze_results.py results/cellpose.pkl
 Создаёт `summary.csv`, `bootstrap.csv`, `config_stability.csv`, `ranking.png`,
 `score_distributions.png`.
 
+Для deep-метрик с config-dependent scale (LPIPS `lin`/`avg` и т.п.) перед
+OOF-оценкой полезна per-fold rank-нормализация:
+
+```python
+from nested_cv_metrics_opt import load_artifact, evaluate_oof, normalize_oof_per_fold
+
+oof, fold_meta, meta_df, info = load_artifact("results/my_run.pkl")
+oof_norm = normalize_oof_per_fold(oof)  # для классических метрик обычно не нужна
+results = evaluate_oof(oof_norm, meta_df)
+```
+
 ## Документация
 
 - **`AGENTS.md`** — устройство репозитория, окружение, запуск (для агентов и разработчиков).

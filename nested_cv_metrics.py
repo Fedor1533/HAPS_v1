@@ -533,6 +533,23 @@ def run_outer_cv(dataset, identities=None, outer_seed=155):
 
 
 # ---------------------------------------------------------------------------
+# Per-fold нормализация OOF predictions (rank → [0, 1])
+# ---------------------------------------------------------------------------
+
+def normalize_oof_per_fold(oof_predictions):
+    """
+    Rank-нормализация similarity_score внутри каждой (metric, fold) пары.
+    Решает проблему несопоставимого масштаба между фолдами (например, lin vs avg в LPIPS).
+    Spearman/AUC инвариантны к этой трансформации внутри fold.
+    """
+    df = pd.DataFrame(oof_predictions)
+    df["similarity_score"] = df.groupby(["metric", "fold"])["similarity_score"].transform(
+        lambda x: (scipy.stats.rankdata(x) - 1) / (len(x) - 1) if len(x) > 1 else x
+    )
+    return df.to_dict("records")
+
+
+# ---------------------------------------------------------------------------
 # OOF агрегация: финальные метрики по всем парам
 # ---------------------------------------------------------------------------
 

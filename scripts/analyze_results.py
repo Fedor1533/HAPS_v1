@@ -99,6 +99,11 @@ def main():
     ap.add_argument("--outdir", default=None, help="Куда писать отчёт (по умолчанию рядом с первым pkl)")
     ap.add_argument("--n-boot", type=int, default=1000)
     ap.add_argument("--top", type=int, default=3, help="Сколько top-метрик для распределений")
+    ap.add_argument(
+        "--normalize-per-fold",
+        action="store_true",
+        help="Per-fold rank-нормализация OOF (для deep-метрик с разным масштабом между фолдами)",
+    )
     args = ap.parse_args()
 
     paths = [Path(p) for p in args.pkl]
@@ -106,6 +111,9 @@ def main():
     outdir.mkdir(parents=True, exist_ok=True)
 
     oof, fold_meta, meta_df, _ = _load_many(paths)
+    if args.normalize_per_fold:
+        oof = ncv.normalize_oof_per_fold(oof)
+        print("Applied normalize_oof_per_fold()")
 
     # 1. Финальные метрики
     summary = ncv.evaluate_oof(oof, meta_df)
