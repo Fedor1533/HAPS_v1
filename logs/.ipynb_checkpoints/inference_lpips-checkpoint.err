@@ -1,0 +1,4 @@
+  File "/beegfs/home/m.romanov/benchmarking/HAPS_v1/inference_lpips.py", line 20
+    "metric": "lpips",
+            ^
+SyntaxError: invalid syntax

@@ -1,0 +1,22 @@
+Filtering 15%
+Loaded 4642 samples
+Removed 696 samples
+Kept 3946 samples
+Saved filtered csv:
+/trinity/home/m.romanov/benchmarking/datasets/MIST_HER2_LPIPS_15/filtered_85percent.csv
+Train links: 3946
+testA: 1000 links
+testB: 1000 links
+
+Done.
+Filtering 25%
+Loaded 4642 samples
+Removed 1160 samples
+Kept 3482 samples
+Saved filtered csv:
+/trinity/home/m.romanov/benchmarking/datasets/MIST_HER2_LPIPS_25/filtered_75percent.csv
+Train links: 3482
+testA: 1000 links
+testB: 1000 links
+
+Done.

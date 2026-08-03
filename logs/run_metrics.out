@@ -1,0 +1,34 @@
+Run CV for specified metrics: ['ncc', 'psnr', 'mi', 'ssim']
+Loaded dataset: 4642
+Dataset columns:
+['pname', 'patch_id', 'Similarity_Score', 'rdist', 'class3', 'fixed_path', 'warped_path']
+        pname  ...                                        warped_path
+0  89M2100212  ...  /trinity/home/m.romanov/benchmarking/datasets/...
+1  89M2100212  ...  /trinity/home/m.romanov/benchmarking/datasets/...
+2  89M2100212  ...  /trinity/home/m.romanov/benchmarking/datasets/...
+3  12M2102884  ...  /trinity/home/m.romanov/benchmarking/datasets/...
+4  15M2102762  ...  /trinity/home/m.romanov/benchmarking/datasets/...
+
+[5 rows x 7 columns]
+
+Started nested CV (n_jobs=1):
+
+
+Test metrics: ['ncc', 'psnr', 'mi', 'ssim']
+n_jobs: 1
+
+Caching dataset...
+Cached 4642 pairs, 61 WSI
+Outer splits:
+0 3668 974
+1 3762 880
+2 3695 947
+3 3769 873
+4 3674 968
+
+=== Outer fold 1/5 ===
+  outer_train: 3668 pairs, 49 WSI
+  outer_val:   974 pairs, 12 WSI
+  
+--- Group: ['ncc', 'psnr', 'mi'] ---
+    64 configs

@@ -1,0 +1,15 @@
+=============================================
+ ОБЪЕДИНЕНИЕ МЕТРИК
+=============================================
+Директория с результатами: /trinity/home/m.romanov/benchmarking/HAPS_v1/results
+Выходной файл: /trinity/home/m.romanov/benchmarking/HAPS_v1/results/all_metrics_merged_test.csv
+=============================================
+  ✓ Найден: mist_ncc_full_test.csv
+  ✗ Отсутствует: mist_ncc_downsample_test.csv
+  ✓ Найден: mist_ncc_patches_test.csv
+  ✓ Найден: mist_lpips_full_test.csv
+  ✓ Найден: mist_lpips_downsample_test.csv
+  ✓ Найден: mist_lpips_patches_test.csv
+
+Найдено 5 файлов для объединения
+ОШИБКА: Не найдено файлов для объединения!

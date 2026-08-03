@@ -1,0 +1,164 @@
+
+=============================================
+ Metric: NCC | Dataset: mist
+=============================================
+
+>>> NCC | dataset=mist | spatial_mode=full | output_size=1024
+Metric: ncc
+Dataset: mist
+Spatial mode: full
+Device: cuda
+Config: {'normalization': True, 'channel_mode': 'hed', 'flip_intensity': False, 'match_histogram': False, 'clahe': False, 'smoothing': True, 'metric': 'ncc'}
+Loaded 266 samples
+
+Saved results to: ./results/mist_ncc_full.csv
+>>> Done: ./results/mist_ncc_full.csv
+
+>>> NCC | dataset=mist | spatial_mode=patches | output_size=1024
+Metric: ncc
+Dataset: mist
+Spatial mode: patches
+Device: cuda
+Config: {'normalization': True, 'channel_mode': 'hed', 'flip_intensity': False, 'match_histogram': False, 'clahe': False, 'smoothing': True, 'metric': 'ncc'}
+Loaded 266 samples
+
+Saved results to: ./results/mist_ncc_patches.csv
+>>> Done: ./results/mist_ncc_patches.csv
+
+>>> NCC | dataset=mist | spatial_mode=downsample | output_size=512
+Metric: ncc
+Dataset: mist
+Spatial mode: downsample
+Device: cuda
+Config: {'normalization': True, 'channel_mode': 'hed', 'flip_intensity': False, 'match_histogram': False, 'clahe': False, 'smoothing': True, 'metric': 'ncc'}
+Loaded 266 samples
+
+Saved results to: ./results/mist_ncc_downsample.csv
+>>> Done: ./results/mist_ncc_downsample.csv
+
+=============================================
+ Metric: NCC | Dataset: generic
+=============================================
+
+>>> NCC | dataset=generic | spatial_mode=full | output_size=1024
+Metric: ncc
+Dataset: generic
+Spatial mode: full
+Device: cuda
+Config: {'normalization': True, 'channel_mode': 'hed', 'flip_intensity': False, 'match_histogram': False, 'clahe': False, 'smoothing': True, 'metric': 'ncc'}
+Loaded 266 samples
+
+Saved results to: ./results/generic_ncc_full.csv
+>>> Done: ./results/generic_ncc_full.csv
+
+>>> NCC | dataset=generic | spatial_mode=patches | output_size=1024
+Metric: ncc
+Dataset: generic
+Spatial mode: patches
+Device: cuda
+Config: {'normalization': True, 'channel_mode': 'hed', 'flip_intensity': False, 'match_histogram': False, 'clahe': False, 'smoothing': True, 'metric': 'ncc'}
+Loaded 266 samples
+
+Saved results to: ./results/generic_ncc_patches.csv
+>>> Done: ./results/generic_ncc_patches.csv
+
+>>> NCC | dataset=generic | spatial_mode=downsample | output_size=512
+Metric: ncc
+Dataset: generic
+Spatial mode: downsample
+Device: cuda
+Config: {'normalization': True, 'channel_mode': 'hed', 'flip_intensity': False, 'match_histogram': False, 'clahe': False, 'smoothing': True, 'metric': 'ncc'}
+Loaded 266 samples
+
+Saved results to: ./results/generic_ncc_downsample.csv
+>>> Done: ./results/generic_ncc_downsample.csv
+
+=============================================
+ Metric: LPIPS | Dataset: mist
+=============================================
+
+>>> LPIPS | dataset=mist | spatial_mode=full | output_size=1024
+Metric: lpips
+Dataset: mist
+Spatial mode: full
+Device: cuda
+Config: {'normalization': True, 'channel_mode': 'rgb', 'flip_intensity': True, 'match_histogram': True, 'clahe': True, 'smoothing': True, 'metric': 'lpips'}
+Loaded 266 samples
+Setting up [LPIPS] perceptual loss: trunk [vgg], v[0.1], spatial [off]
+Loading model from: /trinity/home/m.romanov/miniconda3/envs/PSPStain/lib/python3.9/site-packages/lpips/weights/v0.1/vgg.pth
+
+Saved results to: ./results/mist_lpips_full.csv
+>>> Done: ./results/mist_lpips_full.csv
+
+>>> LPIPS | dataset=mist | spatial_mode=patches | output_size=1024
+Metric: lpips
+Dataset: mist
+Spatial mode: patches
+Device: cuda
+Config: {'normalization': True, 'channel_mode': 'rgb', 'flip_intensity': True, 'match_histogram': True, 'clahe': True, 'smoothing': True, 'metric': 'lpips'}
+Loaded 266 samples
+Setting up [LPIPS] perceptual loss: trunk [vgg], v[0.1], spatial [off]
+Loading model from: /trinity/home/m.romanov/miniconda3/envs/PSPStain/lib/python3.9/site-packages/lpips/weights/v0.1/vgg.pth
+
+Saved results to: ./results/mist_lpips_patches.csv
+>>> Done: ./results/mist_lpips_patches.csv
+
+>>> LPIPS | dataset=mist | spatial_mode=downsample | output_size=512
+Metric: lpips
+Dataset: mist
+Spatial mode: downsample
+Device: cuda
+Config: {'normalization': True, 'channel_mode': 'rgb', 'flip_intensity': True, 'match_histogram': True, 'clahe': True, 'smoothing': True, 'metric': 'lpips'}
+Loaded 266 samples
+Setting up [LPIPS] perceptual loss: trunk [vgg], v[0.1], spatial [off]
+Loading model from: /trinity/home/m.romanov/miniconda3/envs/PSPStain/lib/python3.9/site-packages/lpips/weights/v0.1/vgg.pth
+
+Saved results to: ./results/mist_lpips_downsample.csv
+>>> Done: ./results/mist_lpips_downsample.csv
+
+=============================================
+ Metric: LPIPS | Dataset: generic
+=============================================
+
+>>> LPIPS | dataset=generic | spatial_mode=full | output_size=1024
+Metric: lpips
+Dataset: generic
+Spatial mode: full
+Device: cuda
+Config: {'normalization': True, 'channel_mode': 'rgb', 'flip_intensity': True, 'match_histogram': True, 'clahe': True, 'smoothing': True, 'metric': 'lpips'}
+Loaded 266 samples
+Setting up [LPIPS] perceptual loss: trunk [vgg], v[0.1], spatial [off]
+Loading model from: /trinity/home/m.romanov/miniconda3/envs/PSPStain/lib/python3.9/site-packages/lpips/weights/v0.1/vgg.pth
+
+Saved results to: ./results/generic_lpips_full.csv
+>>> Done: ./results/generic_lpips_full.csv
+
+>>> LPIPS | dataset=generic | spatial_mode=patches | output_size=1024
+Metric: lpips
+Dataset: generic
+Spatial mode: patches
+Device: cuda
+Config: {'normalization': True, 'channel_mode': 'rgb', 'flip_intensity': True, 'match_histogram': True, 'clahe': True, 'smoothing': True, 'metric': 'lpips'}
+Loaded 266 samples
+Setting up [LPIPS] perceptual loss: trunk [vgg], v[0.1], spatial [off]
+Loading model from: /trinity/home/m.romanov/miniconda3/envs/PSPStain/lib/python3.9/site-packages/lpips/weights/v0.1/vgg.pth
+
+Saved results to: ./results/generic_lpips_patches.csv
+>>> Done: ./results/generic_lpips_patches.csv
+
+>>> LPIPS | dataset=generic | spatial_mode=downsample | output_size=512
+Metric: lpips
+Dataset: generic
+Spatial mode: downsample
+Device: cuda
+Config: {'normalization': True, 'channel_mode': 'rgb', 'flip_intensity': True, 'match_histogram': True, 'clahe': True, 'smoothing': True, 'metric': 'lpips'}
+Loaded 266 samples
+Setting up [LPIPS] perceptual loss: trunk [vgg], v[0.1], spatial [off]
+Loading model from: /trinity/home/m.romanov/miniconda3/envs/PSPStain/lib/python3.9/site-packages/lpips/weights/v0.1/vgg.pth
+
+Saved results to: ./results/generic_lpips_downsample.csv
+>>> Done: ./results/generic_lpips_downsample.csv
+
+=============================================
+ All done! Results saved in ./results/
+=============================================

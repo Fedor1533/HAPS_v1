@@ -1,0 +1,12 @@
+
+=============================================
+ Metric: NCC | Dataset: mist
+=============================================
+
+>>> NCC | dataset=mist | spatial_mode=full | output_size=1024
+Metric: ncc
+Dataset: mist
+Spatial mode: full
+Device: cuda
+Config: {'normalization': True, 'channel_mode': 'hed', 'flip_intensity': False, 'match_histogram': False, 'clahe': False, 'smoothing': True, 'metric': 'ncc'}
+Loaded 266 samples

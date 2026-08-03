@@ -1,0 +1,59 @@
+=============================================
+ Creating filtered datasets based on LPIPS patches
+ AUC_3class=0.7041, AUC_2class=0.6534
+ Note: LPIPS uses --descending (higher = worse)
+=============================================
+
+=== Filtering 15% worst (LPIPS patches) ===
+Using score column: 'lpips_mist_mpp1.0112_patches'
+Loaded 266 samples
+Removed 39 worst samples (bottom 15.0%)
+Kept 227 samples (85.0%)
+
+Score statistics (kept samples):
+  Min: 0.4553
+  Max: 0.6156
+  Mean: 0.5566
+  Std: 0.0364
+
+Saved filtered csv: /trinity/home/m.romanov/benchmarking/datasets/MIST_HER2_LPIPS_PATCHES_15/filtered_85percent.csv
+
+Creating train symlinks...
+Train links created: 227
+
+Creating test symlinks...
+  testA: 1000 links
+  testB: 1000 links
+
+============================================================
+Done! Filtered dataset created at: /trinity/home/m.romanov/benchmarking/datasets/MIST_HER2_LPIPS_PATCHES_15
+============================================================
+
+=== Filtering 25% worst (LPIPS patches) ===
+Using score column: 'lpips_mist_mpp1.0112_patches'
+Loaded 266 samples
+Removed 66 worst samples (bottom 25.0%)
+Kept 200 samples (75.0%)
+
+Score statistics (kept samples):
+  Min: 0.4553
+  Max: 0.5979
+  Mean: 0.5497
+  Std: 0.0331
+
+Saved filtered csv: /trinity/home/m.romanov/benchmarking/datasets/MIST_HER2_LPIPS_PATCHES_25/filtered_75percent.csv
+
+Creating train symlinks...
+Train links created: 200
+
+Creating test symlinks...
+  testA: 1000 links
+  testB: 1000 links
+
+============================================================
+Done! Filtered dataset created at: /trinity/home/m.romanov/benchmarking/datasets/MIST_HER2_LPIPS_PATCHES_25
+============================================================
+
+=============================================
+ Done! Filtered datasets created.
+=============================================
