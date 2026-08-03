@@ -29,8 +29,8 @@ def merge_metrics(results_dir, output_csv):
     
 
     patterns = [
-        os.path.join(results_dir, "mist_*.csv"),
-        os.path.join(results_dir, "generic_*.csv"),
+        os.path.join(results_dir, "ncc_*.csv"),
+        os.path.join(results_dir, "lpips_*.csv"),
     ]
 
     all_files = []

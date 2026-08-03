@@ -24,13 +24,11 @@ from scripts.spatial_preprocessing import (
 )
 
 
-
 def parse_args():
 
     parser = argparse.ArgumentParser(
         description="Calculate image similarity metric"
     )
-
 
     parser.add_argument(
         "--metric",
@@ -39,7 +37,6 @@ def parse_args():
         choices=["ncc", "lpips"],
         help="Metric to calculate",
     )
-
 
     parser.add_argument(
         "--csv",
@@ -55,14 +52,12 @@ def parse_args():
         help="Output CSV",
     )
 
-
     parser.add_argument(
         "--device",
         type=str,
         default="cpu",
         help="cpu or cuda",
     )
-
 
     parser.add_argument(
         "--dataset",
@@ -71,7 +66,6 @@ def parse_args():
         choices=["generic", "mist"],
         help="Dataset type",
     )
-
 
     parser.add_argument(
         "--spatial-mode",
@@ -84,7 +78,6 @@ def parse_args():
         ],
         help="Spatial preprocessing mode",
     )
-
 
     parser.add_argument(
         "--source-mpp",
@@ -100,22 +93,6 @@ def parse_args():
         help="Target image MPP (for MIST dataset)",
     )
 
-
-    parser.add_argument(
-        "--output-size",
-        type=int,
-        default=1024,
-        help="Output image size",
-    )
-
-    parser.add_argument(
-        "--patch-size",
-        type=int,
-        default=256,
-        help="Patch size",
-    )
-
-
     parser.add_argument(
         "--lpips-net",
         type=str,
@@ -129,7 +106,6 @@ def parse_args():
     )
 
     return parser.parse_args()
-
 
 
 NCC_CONFIG = {
@@ -165,14 +141,12 @@ def get_config(metric_name):
         raise ValueError(f"Unknown metric: {metric_name}")
 
 
-
 def load_image(path):
     """
     Load image as RGB numpy array (uint8).
     """
     image = Image.open(path).convert("RGB")
     return np.array(image)
-
 
 
 def create_lpips_model(
@@ -182,13 +156,12 @@ def create_lpips_model(
     import lpips
 
     loss_fn = lpips.LPIPS(
-        net=net
+        net=net,
     ).to(device)
 
     loss_fn.eval()
 
     return loss_fn
-
 
 
 def calculate_single_metric(
@@ -202,39 +175,37 @@ def calculate_single_metric(
 ):
     """
     Calculate metric for one pair using the Preprocessor pipeline.
-    
+
     Parameters
     ----------
     src_np : np.ndarray
         Source image (H, W, C) uint8.
-    
+
     trg_np : np.ndarray
         Target image (H, W, C) uint8.
-    
+
     metric : str
         Metric name ("ncc" or "lpips").
-    
+
     preprocessor : Preprocessor
         Preprocessor instance for pixel-level preprocessing.
-    
+
     config : dict
         Preprocessing config.
-    
+
     device : torch.device
-    
+
     loss_fn : lpips.LPIPS or None
-    
+
     Returns
     -------
     float
         Metric score.
     """
-    
-    # Preprocess using the full pipeline
+
     inp = preprocessor.process(src_np, trg_np, config)
 
     if metric == "ncc":
-        # NCC uses the numpy branch from MetricInput
         score = calc_ncc(
             inp.src_np,
             inp.trg_np,
@@ -242,7 +213,6 @@ def calculate_single_metric(
         )
 
     elif metric == "lpips":
-        # LPIPS uses the tensor branch from MetricInput
         score = calc_lpips(
             src_t=inp.src_t,
             trg_t=inp.trg_t,
@@ -257,16 +227,14 @@ def calculate_single_metric(
     return score
 
 
-
 def main():
 
     args = parse_args()
 
-    print(f"Metric: {args.metric}")
-    print(f"Dataset: {args.dataset}")
+    print(f"Metric:       {args.metric}")
+    print(f"Dataset:      {args.dataset}")
     print(f"Spatial mode: {args.spatial_mode}")
-    print(f"Device: {args.device}")
-
+    print(f"Device:       {args.device}")
 
     if args.device == "cuda":
         if not torch.cuda.is_available():
@@ -275,12 +243,10 @@ def main():
     else:
         device = torch.device("cpu")
 
-
     config = get_config(args.metric)
     print(f"Config: {config}")
 
     preprocessor = Preprocessor(device=str(device))
-
 
     df = pd.read_csv(args.csv)
 
@@ -291,7 +257,6 @@ def main():
 
     print(f"Loaded {len(df)} samples")
 
-
     loss_fn = None
     if args.metric == "lpips":
         loss_fn = create_lpips_model(
@@ -299,9 +264,7 @@ def main():
             device=device,
         )
 
-
     scores = []
-
 
     for _, row in tqdm(
         df.iterrows(),
@@ -312,10 +275,8 @@ def main():
         fixed_path = row["fixed_path"]
         warped_path = row["warped_path"]
 
-
-        src = load_image(warped_path)  
-        trg = load_image(fixed_path)    
-
+        src = load_image(warped_path)
+        trg = load_image(fixed_path)
 
         src_proc, trg_proc = preprocess_pair_spatial(
             src,
@@ -324,10 +285,7 @@ def main():
             dataset=args.dataset,
             source_mpp=args.source_mpp,
             target_mpp=args.target_mpp,
-            output_size=args.output_size,
-            patch_size=args.patch_size,
         )
-
 
         if args.spatial_mode == "patches":
 
@@ -359,7 +317,6 @@ def main():
             )
 
         scores.append(final_score)
-
 
     # Build a descriptive column name
     metric_column = f"{args.metric}"
