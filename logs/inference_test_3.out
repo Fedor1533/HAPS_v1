@@ -61,7 +61,7 @@ Metric:       lpips
 Dataset:      generic
 Spatial mode: full
 Device:       cuda
-Config: {'normalization': True, 'channel_mode': 'rgb', 'flip_intensity': True, 'match_histogram': True, 'clahe': True, 'smoothing': True, 'metric': 'lpips'}
+Config: {'normalization': False, 'channel_mode': 'rgb', 'flip_intensity': True, 'match_histogram': True, 'clahe': False, 'smoothing': False, 'metric': 'lpips'}
 Loaded 266 samples
 Setting up [LPIPS] perceptual loss: trunk [vgg], v[0.1], spatial [off]
 Loading model from: /trinity/home/m.romanov/miniconda3/envs/PSPStain/lib/python3.9/site-packages/lpips/weights/v0.1/vgg.pth
@@ -74,7 +74,7 @@ Metric:       lpips
 Dataset:      generic
 Spatial mode: patches
 Device:       cuda
-Config: {'normalization': True, 'channel_mode': 'rgb', 'flip_intensity': True, 'match_histogram': True, 'clahe': True, 'smoothing': True, 'metric': 'lpips'}
+Config: {'normalization': False, 'channel_mode': 'rgb', 'flip_intensity': True, 'match_histogram': True, 'clahe': False, 'smoothing': False, 'metric': 'lpips'}
 Loaded 266 samples
 Setting up [LPIPS] perceptual loss: trunk [vgg], v[0.1], spatial [off]
 Loading model from: /trinity/home/m.romanov/miniconda3/envs/PSPStain/lib/python3.9/site-packages/lpips/weights/v0.1/vgg.pth
@@ -87,7 +87,7 @@ Metric:       lpips
 Dataset:      mist
 Spatial mode: downsample
 Device:       cuda
-Config: {'normalization': True, 'channel_mode': 'rgb', 'flip_intensity': True, 'match_histogram': True, 'clahe': True, 'smoothing': True, 'metric': 'lpips'}
+Config: {'normalization': False, 'channel_mode': 'rgb', 'flip_intensity': True, 'match_histogram': True, 'clahe': False, 'smoothing': False, 'metric': 'lpips'}
 Loaded 266 samples
 Setting up [LPIPS] perceptual loss: trunk [vgg], v[0.1], spatial [off]
 Loading model from: /trinity/home/m.romanov/miniconda3/envs/PSPStain/lib/python3.9/site-packages/lpips/weights/v0.1/vgg.pth
@@ -100,7 +100,7 @@ Metric:       lpips
 Dataset:      mist
 Spatial mode: patches
 Device:       cuda
-Config: {'normalization': True, 'channel_mode': 'rgb', 'flip_intensity': True, 'match_histogram': True, 'clahe': True, 'smoothing': True, 'metric': 'lpips'}
+Config: {'normalization': False, 'channel_mode': 'rgb', 'flip_intensity': True, 'match_histogram': True, 'clahe': False, 'smoothing': False, 'metric': 'lpips'}
 Loaded 266 samples
 Setting up [LPIPS] perceptual loss: trunk [vgg], v[0.1], spatial [off]
 Loading model from: /trinity/home/m.romanov/miniconda3/envs/PSPStain/lib/python3.9/site-packages/lpips/weights/v0.1/vgg.pth
