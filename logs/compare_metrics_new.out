@@ -1,130 +1,82 @@
 Создаю объединённый файл метрик...
-  Найден: mist_ncc_full.csv
-  Найден: mist_ncc_downsample.csv
-  Найден: mist_ncc_patches.csv
-  Найден: mist_lpips_full.csv
-  Найден: mist_lpips_downsample.csv
-  Найден: mist_lpips_patches.csv
-  Найден: generic_ncc_full.csv
-  Найден: generic_ncc_downsample.csv
-  Найден: generic_ncc_patches.csv
-  Найден: generic_lpips_full.csv
-  Найден: generic_lpips_downsample.csv
-  Найден: generic_lpips_patches.csv
-Найдено файлов: 18
-После фильтрации: 18 файлов
+  Найден: ncc_original_full.csv
+  Найден: ncc_original_patches.csv
+  Найден: ncc_mpp_downsample.csv
+  Найден: ncc_mpp_patches.csv
+  Найден: lpips_original_full.csv
+  Найден: lpips_original_patches.csv
+  Найден: lpips_mpp_downsample.csv
+  Найден: lpips_mpp_patches.csv
+Найдено файлов: 8
+После фильтрации: 8 файлов
 
 Файлы для объединения:
-  - generic_lpips_downsample.csv
-  - generic_lpips_full.csv
-  - generic_lpips_patches.csv
-  - generic_ncc_downsample.csv
-  - generic_ncc_full.csv
-  - generic_ncc_patches.csv
-  - mist_lpips_downsample.csv
-  - mist_lpips_downsample_test.csv
-  - mist_lpips_full.csv
-  - mist_lpips_full_test.csv
-  - mist_lpips_patches.csv
-  - mist_lpips_patches_test.csv
-  - mist_ncc_downsample.csv
-  - mist_ncc_downsample_test.csv
-  - mist_ncc_full.csv
-  - mist_ncc_full_test.csv
-  - mist_ncc_patches.csv
-  - mist_ncc_patches_test.csv
+  - lpips_mpp_downsample.csv
+  - lpips_mpp_patches.csv
+  - lpips_original_full.csv
+  - lpips_original_patches.csv
+  - ncc_mpp_downsample.csv
+  - ncc_mpp_patches.csv
+  - ncc_original_full.csv
+  - ncc_original_patches.csv
 
-Базовый файл: generic_lpips_downsample.csv
+Базовый файл: lpips_mpp_downsample.csv
   Записей: 266
   Колонок: 8
-  Колонки: ['pname', 'patch_id', 'Similarity_Score', 'rdist', 'class3', 'fixed_path', 'warped_path', 'lpips_downsample']
+  Колонки: ['pname', 'patch_id', 'Similarity_Score', 'rdist', 'class3', 'fixed_path', 'warped_path', 'lpips_mist_mpp1.0112_downsample']
   ВНИМАНИЕ: Отсутствуют базовые колонки: ['dist', 'class']
   Пропущена (уже существует): Similarity_Score
   Пропущена (уже существует): class3
-  ✓ Добавлена: lpips_full (из generic_lpips_full.csv)
+  ✓ Добавлена: lpips_mist_mpp1.0112_patches (из lpips_mpp_patches.csv)
   Пропущена (уже существует): Similarity_Score
   Пропущена (уже существует): class3
-  ✓ Добавлена: lpips_patches (из generic_lpips_patches.csv)
+  ✓ Добавлена: lpips_full (из lpips_original_full.csv)
   Пропущена (уже существует): Similarity_Score
   Пропущена (уже существует): class3
-  ✓ Добавлена: ncc_downsample (из generic_ncc_downsample.csv)
+  ✓ Добавлена: lpips_patches (из lpips_original_patches.csv)
   Пропущена (уже существует): Similarity_Score
   Пропущена (уже существует): class3
-  ✓ Добавлена: ncc_full (из generic_ncc_full.csv)
+  ✓ Добавлена: ncc_mist_mpp1.0112_downsample (из ncc_mpp_downsample.csv)
   Пропущена (уже существует): Similarity_Score
   Пропущена (уже существует): class3
-  ✓ Добавлена: ncc_patches (из generic_ncc_patches.csv)
+  ✓ Добавлена: ncc_mist_mpp1.0112_patches (из ncc_mpp_patches.csv)
   Пропущена (уже существует): Similarity_Score
   Пропущена (уже существует): class3
-  ✓ Добавлена: lpips_mist_mpp1.0112_downsample (из mist_lpips_downsample.csv)
+  ✓ Добавлена: ncc_full (из ncc_original_full.csv)
   Пропущена (уже существует): Similarity_Score
   Пропущена (уже существует): class3
-  Пропущена (уже существует): lpips_mist_mpp1.0112_downsample
-  Пропущена (уже существует): Similarity_Score
-  Пропущена (уже существует): class3
-  ✓ Добавлена: lpips_mist_mpp1.0112_full (из mist_lpips_full.csv)
-  Пропущена (уже существует): Similarity_Score
-  Пропущена (уже существует): class3
-  Пропущена (уже существует): lpips_mist_mpp1.0112_full
-  Пропущена (уже существует): Similarity_Score
-  Пропущена (уже существует): class3
-  ✓ Добавлена: lpips_mist_mpp1.0112_patches (из mist_lpips_patches.csv)
-  Пропущена (уже существует): Similarity_Score
-  Пропущена (уже существует): class3
-  Пропущена (уже существует): lpips_mist_mpp1.0112_patches
-  Пропущена (уже существует): Similarity_Score
-  Пропущена (уже существует): class3
-  ✓ Добавлена: ncc_mist_mpp1.0112_downsample (из mist_ncc_downsample.csv)
-  Пропущена (уже существует): Similarity_Score
-  Пропущена (уже существует): class3
-  Пропущена (уже существует): ncc_mist_mpp1.0112_downsample
-  Пропущена (уже существует): Similarity_Score
-  Пропущена (уже существует): class3
-  ✓ Добавлена: ncc_mist_mpp1.0112_full (из mist_ncc_full.csv)
-  Пропущена (уже существует): Similarity_Score
-  Пропущена (уже существует): class3
-  Пропущена (уже существует): ncc_mist_mpp1.0112_full
-  Пропущена (уже существует): Similarity_Score
-  Пропущена (уже существует): class3
-  ✓ Добавлена: ncc_mist_mpp1.0112_patches (из mist_ncc_patches.csv)
-  Пропущена (уже существует): Similarity_Score
-  Пропущена (уже существует): class3
-  Пропущена (уже существует): ncc_mist_mpp1.0112_patches
+  ✓ Добавлена: ncc_patches (из ncc_original_patches.csv)
 
 Результат объединения:
   Всего записей: 266
-  Всего колонок: 19
-  Добавлено метрик: 11
-  Метрики: ['lpips_full', 'lpips_patches', 'ncc_downsample', 'ncc_full', 'ncc_patches', 'lpips_mist_mpp1.0112_downsample', 'lpips_mist_mpp1.0112_full', 'lpips_mist_mpp1.0112_patches', 'ncc_mist_mpp1.0112_downsample', 'ncc_mist_mpp1.0112_full', 'ncc_mist_mpp1.0112_patches']
+  Всего колонок: 15
+  Добавлено метрик: 7
+  Метрики: ['lpips_mist_mpp1.0112_patches', 'lpips_full', 'lpips_patches', 'ncc_mist_mpp1.0112_downsample', 'ncc_mist_mpp1.0112_patches', 'ncc_full', 'ncc_patches']
 
 ✓ Объединенный CSV сохранен: /trinity/home/m.romanov/benchmarking/HAPS_v1/results/all_metrics_merged.csv
-  Размер файла: 110.9 KB
+  Размер файла: 91.1 KB
 
 Первые 5 строк:
-        pname          patch_id  rdist  ... ncc_mist_mpp1.0112_downsample ncc_mist_mpp1.0112_full  ncc_mist_mpp1.0112_patches
-0  12M2102884   12M2102884_10_7      0  ...                      0.175751                0.108077                    0.137529
-1  12M2102884    12M2102884_7_9      0  ...                      0.198895                0.143117                    0.182848
-2  48M2101314  48M2101314_40_34      0  ...                      0.034521                0.024263                    0.032918
-3  57M2101034   57M2101034_5_20      0  ...                      0.127649                0.073910                    0.103158
-4  88M2100218   88M2100218_27_3      0  ...                      0.037511                0.025744                    0.031071
+        pname          patch_id  rdist                                         fixed_path  ... ncc_mist_mpp1.0112_downsample  ncc_mist_mpp1.0112_patches  ncc_full  ncc_patches
+0  12M2102884   12M2102884_10_7      0  /trinity/home/m.romanov/benchmarking/datasets/...  ...                      0.187647                    0.146588  0.107377     0.080405
+1  12M2102884    12M2102884_7_9      0  /trinity/home/m.romanov/benchmarking/datasets/...  ...                      0.210815                    0.195443  0.141836     0.130292
+2  48M2101314  48M2101314_40_34      0  /trinity/home/m.romanov/benchmarking/datasets/...  ...                      0.036224                    0.034871  0.023725     0.022209
+3  57M2101034   57M2101034_5_20      0  /trinity/home/m.romanov/benchmarking/datasets/...  ...                      0.136413                    0.109566  0.062659     0.049978
+4  88M2100218   88M2100218_27_3      0  /trinity/home/m.romanov/benchmarking/datasets/...  ...                      0.038524                    0.031324  0.023329     0.018996
 
-[5 rows x 19 columns]
+[5 rows x 15 columns]
 Анализ файла: /trinity/home/m.romanov/benchmarking/HAPS_v1/results/all_metrics_merged.csv
-Автоматически найдены метрики: ['lpips_downsample', 'lpips_full', 'lpips_patches', 'ncc_downsample', 'ncc_full', 'ncc_patches', 'lpips_mist_mpp1.0112_downsample', 'lpips_mist_mpp1.0112_full', 'lpips_mist_mpp1.0112_patches', 'ncc_mist_mpp1.0112_downsample', 'ncc_mist_mpp1.0112_full', 'ncc_mist_mpp1.0112_patches']
+Автоматически найдены метрики: ['lpips_mist_mpp1.0112_downsample', 'lpips_mist_mpp1.0112_patches', 'lpips_full', 'lpips_patches', 'ncc_mist_mpp1.0112_downsample', 'ncc_mist_mpp1.0112_patches', 'ncc_full', 'ncc_patches']
 
-Метрики для анализа (12):
-  - lpips_downsample
+Метрики для анализа (8):
+  - lpips_mist_mpp1.0112_downsample
+  - lpips_mist_mpp1.0112_patches
   - lpips_full
   - lpips_patches
-  - ncc_downsample
+  - ncc_mist_mpp1.0112_downsample
+  - ncc_mist_mpp1.0112_patches
   - ncc_full
   - ncc_patches
-  - lpips_mist_mpp1.0112_downsample
-  - lpips_mist_mpp1.0112_full
-  - lpips_mist_mpp1.0112_patches
-  - ncc_mist_mpp1.0112_downsample
-  - ncc_mist_mpp1.0112_full
-  - ncc_mist_mpp1.0112_patches
 Используется колонка классов: 'class3'
 Уникальные значения классов: [0, 1, 2]
 Количество классов: 3
@@ -142,17 +94,30 @@
 ============================================================
 
 ────────────────────────────────────────
-Метрика: lpips_downsample
-  Mean ± Std: 0.5852 ± 0.0486
+Метрика: lpips_mist_mpp1.0112_downsample
+  Mean ± Std: 0.5815 ± 0.0488
 
   3-классовая классификация:
-   AUC для пары 0 vs 1: 0.7058
-   AUC для пары 0 vs 2: 0.8051
-   AUC для пары 1 vs 2: 0.6308
-  → Macro-AUC (3 класса): 0.7139
+   AUC для пары 0 vs 1: 0.7160
+   AUC для пары 0 vs 2: 0.8126
+   AUC для пары 1 vs 2: 0.6412
+  → Macro-AUC (3 класса): 0.7233
 
   2-классовая классификация:
-  → AUC (2 класса): 0.6479
+  → AUC (2 класса): 0.6580
+
+────────────────────────────────────────
+Метрика: lpips_mist_mpp1.0112_patches
+  Mean ± Std: 0.5739 ± 0.0471
+
+  3-классовая классификация:
+   AUC для пары 0 vs 1: 0.7032
+   AUC для пары 0 vs 2: 0.8045
+   AUC для пары 1 vs 2: 0.6467
+  → Macro-AUC (3 класса): 0.7182
+
+  2-классовая классификация:
+  → AUC (2 класса): 0.6622
 
 ────────────────────────────────────────
 Метрика: lpips_full
@@ -169,31 +134,46 @@
 
 ────────────────────────────────────────
 Метрика: lpips_patches
-  Mean ± Std: 0.5765 ± 0.0473
+  Mean ± Std: 0.6075 ± 0.0429
 
   3-классовая классификация:
-   AUC для пары 0 vs 1: 0.6801
-   AUC для пары 0 vs 2: 0.7912
-   AUC для пары 1 vs 2: 0.6365
-  → Macro-AUC (3 класса): 0.7026
+   AUC для пары 0 vs 1: 0.5327
+   AUC для пары 0 vs 2: 0.6050
+   AUC для пары 1 vs 2: 0.5716
+  → Macro-AUC (3 класса): 0.5698
 
   2-классовая классификация:
-  → AUC (2 класса): 0.6516
+  → AUC (2 класса): 0.5749
 
 ────────────────────────────────────────
-Метрика: ncc_downsample
-  Mean ± Std: 0.1589 ± 0.1327
+Метрика: ncc_mist_mpp1.0112_downsample
+  Mean ± Std: 0.1658 ± 0.1375
 
   3-классовая классификация:
-[INFO] Обнаружена отрицательная корреляция (-0.426). Инвертируем метрику.
-   AUC для пары 0 vs 1: 0.4910
-   AUC для пары 0 vs 2: 0.7658
-   AUC для пары 1 vs 2: 0.7496
-  → Macro-AUC (3 класса): 0.6688
+[INFO] Обнаружена отрицательная корреляция (-0.430). Инвертируем метрику.
+   AUC для пары 0 vs 1: 0.4949
+   AUC для пары 0 vs 2: 0.7727
+   AUC для пары 1 vs 2: 0.7511
+  → Macro-AUC (3 класса): 0.6729
 
   2-классовая классификация:
-[INFO] Обнаружена отрицательная корреляция (-0.435). Инвертируем метрику.
-  → AUC (2 класса): 0.7511
+[INFO] Обнаружена отрицательная корреляция (-0.439). Инвертируем метрику.
+  → AUC (2 класса): 0.7532
+
+────────────────────────────────────────
+Метрика: ncc_mist_mpp1.0112_patches
+  Mean ± Std: 0.1208 ± 0.1084
+
+  3-классовая классификация:
+[INFO] Обнаружена отрицательная корреляция (-0.464). Инвертируем метрику.
+   AUC для пары 0 vs 1: 0.6038
+   AUC для пары 0 vs 2: 0.8375
+   AUC для пары 1 vs 2: 0.7576
+  → Macro-AUC (3 класса): 0.7330
+
+  2-классовая классификация:
+[INFO] Обнаружена отрицательная корреляция (-0.460). Инвертируем метрику.
+  → AUC (2 класса): 0.7654
 
 ────────────────────────────────────────
 Метрика: ncc_full
@@ -212,130 +192,42 @@
 
 ────────────────────────────────────────
 Метрика: ncc_patches
-  Mean ± Std: 0.1156 ± 0.1044
+  Mean ± Std: 0.0907 ± 0.0853
 
   3-классовая классификация:
-[INFO] Обнаружена отрицательная корреляция (-0.459). Инвертируем метрику.
-   AUC для пары 0 vs 1: 0.5923
-   AUC для пары 0 vs 2: 0.8311
-   AUC для пары 1 vs 2: 0.7560
-  → Macro-AUC (3 класса): 0.7265
+[INFO] Обнаружена отрицательная корреляция (-0.428). Инвертируем метрику.
+   AUC для пары 0 vs 1: 0.5744
+   AUC для пары 0 vs 2: 0.7993
+   AUC для пары 1 vs 2: 0.7411
+  → Macro-AUC (3 класса): 0.7049
 
   2-классовая классификация:
-[INFO] Обнаружена отрицательная корреляция (-0.456). Инвертируем метрику.
-  → AUC (2 класса): 0.7634
-
-────────────────────────────────────────
-Метрика: lpips_mist_mpp1.0112_downsample
-  Mean ± Std: 0.5792 ± 0.0486
-
-  3-классовая классификация:
-   AUC для пары 0 vs 1: 0.7058
-   AUC для пары 0 vs 2: 0.8097
-   AUC для пары 1 vs 2: 0.6404
-  → Macro-AUC (3 класса): 0.7186
-
-  2-классовая классификация:
-  → AUC (2 класса): 0.6569
-
-────────────────────────────────────────
-Метрика: lpips_mist_mpp1.0112_full
-  Mean ± Std: 0.6198 ± 0.0493
-
-  3-классовая классификация:
-   AUC для пары 0 vs 1: 0.5795
-   AUC для пары 0 vs 2: 0.6385
-   AUC для пары 1 vs 2: 0.5681
-  → Macro-AUC (3 класса): 0.5954
-
-  2-классовая классификация:
-  → AUC (2 класса): 0.5750
-
-────────────────────────────────────────
-Метрика: lpips_mist_mpp1.0112_patches
-  Mean ± Std: 0.5699 ± 0.0474
-
-  3-классовая классификация:
-   AUC для пары 0 vs 1: 0.6846
-   AUC для пары 0 vs 2: 0.7889
-   AUC для пары 1 vs 2: 0.6387
-  → Macro-AUC (3 класса): 0.7041
-
-  2-классовая классификация:
-  → AUC (2 класса): 0.6534
-
-────────────────────────────────────────
-Метрика: ncc_mist_mpp1.0112_downsample
-  Mean ± Std: 0.1598 ± 0.1334
-
-  3-классовая классификация:
 [INFO] Обнаружена отрицательная корреляция (-0.427). Инвертируем метрику.
-   AUC для пары 0 vs 1: 0.4923
-   AUC для пары 0 vs 2: 0.7687
-   AUC для пары 1 vs 2: 0.7496
-  → Macro-AUC (3 класса): 0.6702
-
-  2-классовая классификация:
-[INFO] Обнаружена отрицательная корреляция (-0.436). Инвертируем метрику.
-  → AUC (2 класса): 0.7515
-
-────────────────────────────────────────
-Метрика: ncc_mist_mpp1.0112_full
-  Mean ± Std: 0.1267 ± 0.1098
-
-  3-классовая классификация:
-[INFO] Обнаружена отрицательная корреляция (-0.403). Инвертируем метрику.
-   AUC для пары 0 vs 1: 0.4872
-   AUC для пары 0 vs 2: 0.7409
-   AUC для пары 1 vs 2: 0.7380
-  → Macro-AUC (3 класса): 0.6554
-
-  2-классовая классификация:
-[INFO] Обнаружена отрицательная корреляция (-0.413). Инвертируем метрику.
-  → AUC (2 класса): 0.7383
-
-────────────────────────────────────────
-Метрика: ncc_mist_mpp1.0112_patches
-  Mean ± Std: 0.1160 ± 0.1048
-
-  3-классовая классификация:
-[INFO] Обнаружена отрицательная корреляция (-0.459). Инвертируем метрику.
-   AUC для пары 0 vs 1: 0.5962
-   AUC для пары 0 vs 2: 0.8323
-   AUC для пары 1 vs 2: 0.7558
-  → Macro-AUC (3 класса): 0.7281
-
-  2-классовая классификация:
-[INFO] Обнаружена отрицательная корреляция (-0.456). Инвертируем метрику.
-  → AUC (2 класса): 0.7632
+  → AUC (2 класса): 0.7468
 
 ======================================================================
 СВОДНАЯ ТАБЛИЦА AUC
 ======================================================================
 Метрика                                       AUC (3 класса)     AUC (2 класса)    
 ---------------------------------------------------------------------------------
-lpips_downsample                              0.7139             0.6479            
+lpips_mist_mpp1.0112_downsample               0.7233             0.6580            
+lpips_mist_mpp1.0112_patches                  0.7182             0.6622            
 lpips_full                                    0.5552             0.5649            
-lpips_patches                                 0.7026             0.6516            
-ncc_downsample                                0.6688             0.7511            
+lpips_patches                                 0.5698             0.5749            
+ncc_mist_mpp1.0112_downsample                 0.6729             0.7532            
+ncc_mist_mpp1.0112_patches                    0.7330             0.7654            
 ncc_full                                      0.6600             0.7375            
-ncc_patches                                   0.7265             0.7634            
-lpips_mist_mpp1.0112_downsample               0.7186             0.6569            
-lpips_mist_mpp1.0112_full                     0.5954             0.5750            
-lpips_mist_mpp1.0112_patches                  0.7041             0.6534            
-ncc_mist_mpp1.0112_downsample                 0.6702             0.7515            
-ncc_mist_mpp1.0112_full                       0.6554             0.7383            
-ncc_mist_mpp1.0112_patches                    0.7281             0.7632            
+ncc_patches                                   0.7049             0.7468            
 
-Лучшая метрика (3 класса): ncc_mist_mpp1.0112_patches_3class с AUC = 0.7281
-Лучшая метрика (2 класса): ncc_patches_2class с AUC = 0.7634
+Лучшая метрика (3 класса): ncc_mist_mpp1.0112_patches_3class с AUC = 0.7330
+Лучшая метрика (2 класса): ncc_mist_mpp1.0112_patches_2class с AUC = 0.7654
 
 ============================================================
 ВИЗУАЛИЗАЦИЯ
 ============================================================
-Сохранен боксплот: /trinity/home/m.romanov/benchmarking/HAPS_v1/analysis/boxplots/metrics_boxplots_3class_20260803_093142.png
-Сохранен боксплот: /trinity/home/m.romanov/benchmarking/HAPS_v1/analysis/boxplots/metrics_boxplots_2class_20260803_093144.png
-Сохранено сравнение AUC: /trinity/home/m.romanov/benchmarking/HAPS_v1/analysis/auc/auc_comparison_20260803_093146.png
+Сохранен боксплот: /trinity/home/m.romanov/benchmarking/HAPS_v1/analysis/boxplots/metrics_boxplots_3class_20260803_134758.png
+Сохранен боксплот: /trinity/home/m.romanov/benchmarking/HAPS_v1/analysis/boxplots/metrics_boxplots_2class_20260803_134759.png
+Сохранено сравнение AUC: /trinity/home/m.romanov/benchmarking/HAPS_v1/analysis/auc/auc_comparison_20260803_134800.png
 
 Результаты сохранены в: /trinity/home/m.romanov/benchmarking/HAPS_v1/analysis/auc_results.csv
 Готово. Результаты в: /trinity/home/m.romanov/benchmarking/HAPS_v1/analysis
