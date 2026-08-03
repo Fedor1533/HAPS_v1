@@ -1,0 +1,75 @@
+=============================================
+ ОБЪЕДИНЕНИЕ МЕТРИК
+=============================================
+Директория с результатами: /trinity/home/m.romanov/benchmarking/HAPS_v1/results
+Выходной файл: /trinity/home/m.romanov/benchmarking/HAPS_v1/results/all_metrics_merged_test.csv
+=============================================
+
+Проверка наличия файлов:
+  ✓ mist_ncc_full_test.csv
+  ✓ mist_ncc_downsample_test.csv
+  ✓ mist_ncc_patches_test.csv
+  ✓ mist_lpips_full_test.csv
+  ✓ mist_lpips_downsample_test.csv
+  ✓ mist_lpips_patches_test.csv
+
+Запуск объединения...
+Поиск файлов по паттерну: /trinity/home/m.romanov/benchmarking/HAPS_v1/results/mist_*_test.csv
+Найдено файлов: 6
+После фильтрации: 6 файлов
+
+Файлы для объединения:
+  - mist_lpips_downsample_test.csv
+  - mist_lpips_full_test.csv
+  - mist_lpips_patches_test.csv
+  - mist_ncc_downsample_test.csv
+  - mist_ncc_full_test.csv
+  - mist_ncc_patches_test.csv
+
+Базовый файл: mist_lpips_downsample_test.csv
+  Записей: 266
+  Колонок: 8
+  Колонки: ['pname', 'patch_id', 'Similarity_Score', 'rdist', 'class3', 'fixed_path', 'warped_path', 'lpips_mist_mpp1.0112_downsample']
+  ВНИМАНИЕ: Отсутствуют базовые колонки: ['dist', 'class']
+  Пропущена (уже существует): Similarity_Score
+  Пропущена (уже существует): class3
+  ✓ Добавлена: lpips_mist_mpp1.0112_full (из mist_lpips_full_test.csv)
+  Пропущена (уже существует): Similarity_Score
+  Пропущена (уже существует): class3
+  ✓ Добавлена: lpips_mist_mpp1.0112_patches (из mist_lpips_patches_test.csv)
+  Пропущена (уже существует): Similarity_Score
+  Пропущена (уже существует): class3
+  ✓ Добавлена: ncc_mist_mpp1.0112_downsample (из mist_ncc_downsample_test.csv)
+  Пропущена (уже существует): Similarity_Score
+  Пропущена (уже существует): class3
+  ✓ Добавлена: ncc_mist_mpp1.0112_full (из mist_ncc_full_test.csv)
+  Пропущена (уже существует): Similarity_Score
+  Пропущена (уже существует): class3
+  ✓ Добавлена: ncc_mist_mpp1.0112_patches (из mist_ncc_patches_test.csv)
+
+Результат объединения:
+  Всего записей: 266
+  Всего колонок: 13
+  Добавлено метрик: 5
+  Метрики: ['lpips_mist_mpp1.0112_full', 'lpips_mist_mpp1.0112_patches', 'ncc_mist_mpp1.0112_downsample', 'ncc_mist_mpp1.0112_full', 'ncc_mist_mpp1.0112_patches']
+
+✓ Объединенный CSV сохранен: /trinity/home/m.romanov/benchmarking/HAPS_v1/results/all_metrics_merged_test.csv
+  Размер файла: 81.4 KB
+
+Первые 5 строк:
+        pname          patch_id  rdist  ... ncc_mist_mpp1.0112_downsample ncc_mist_mpp1.0112_full  ncc_mist_mpp1.0112_patches
+0  12M2102884   12M2102884_10_7      0  ...                      0.108077                0.108077                    0.137529
+1  12M2102884    12M2102884_7_9      0  ...                      0.143117                0.143117                    0.182848
+2  48M2101314  48M2101314_40_34      0  ...                      0.024263                0.024263                    0.032918
+3  57M2101034   57M2101034_5_20      0  ...                      0.073910                0.073910                    0.103158
+4  88M2100218   88M2100218_27_3      0  ...                      0.025744                0.025744                    0.031071
+
+[5 rows x 13 columns]
+
+=============================================
+ ГОТОВО!
+=============================================
+Объединенный файл: /trinity/home/m.romanov/benchmarking/HAPS_v1/results/all_metrics_merged_test.csv
+
+Для анализа выполните:
+  python analyze_metrics.py --csv /trinity/home/m.romanov/benchmarking/HAPS_v1/results/all_metrics_merged_test.csv --output-dir /trinity/home/m.romanov/benchmarking/HAPS_v1/analysis

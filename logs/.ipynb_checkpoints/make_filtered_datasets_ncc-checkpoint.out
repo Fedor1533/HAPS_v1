@@ -1,0 +1,22 @@
+Filtering 15%
+Loaded 4642 samples
+Removed 696 samples
+Kept 3946 samples
+Saved filtered csv:
+/trinity/home/m.romanov/benchmarking/datasets/MIST_HER2_ncc_15/filtered_85percent.csv
+Train links: 3946
+Skip /trinity/home/m.romanov/benchmarking/datasets/MIST_HER2/testA/HE
+Skip /trinity/home/m.romanov/benchmarking/datasets/MIST_HER2/testB/IHC
+
+Done.
+Filtering 25%
+Loaded 4642 samples
+Removed 696 samples
+Kept 3946 samples
+Saved filtered csv:
+/trinity/home/m.romanov/benchmarking/datasets/MIST_HER2_ncc_15/filtered_85percent.csv
+Train links: 3946
+Skip /trinity/home/m.romanov/benchmarking/datasets/MIST_HER2/testA/HE
+Skip /trinity/home/m.romanov/benchmarking/datasets/MIST_HER2/testB/IHC
+
+Done.

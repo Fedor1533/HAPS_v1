@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/beegfs/home/m.romanov/benchmarking/HAPS_v1/run_cv_v1.py", line 8, in <module>
+    import nested_cv_metrics_opt as n_cv_opt
+  File "/beegfs/home/m.romanov/benchmarking/HAPS_v1/nested_cv_metrics_opt.py", line 20, in <module>
+    from scripts.metrics import calc_ncc, calc_psnr, calc_mi, calc_ssim, calc_ms_ssim, calc_fsim, calc_lpips, calc_dists
+  File "/beegfs/home/m.romanov/benchmarking/HAPS_v1/scripts/metrics.py", line 5, in <module>
+    import piq
+ModuleNotFoundError: No module named 'piq'
+/var/spool/slurmd/job8427806/slurm_script: line 22: --output: command not found

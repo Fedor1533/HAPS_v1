@@ -1,0 +1,100 @@
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:142: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  bp = ax.boxplot(boxplot_data, labels=boxplot_labels,
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:148: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap(palette, len(boxplot_data))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:201: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors_3 = plt.cm.get_cmap('viridis', len(metrics_3))
+/beegfs/home/m.romanov/benchmarking/HAPS_v1/analyze_metrics.py:225: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors_2 = plt.cm.get_cmap('plasma', len(metrics_2))

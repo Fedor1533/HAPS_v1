@@ -1,0 +1,59 @@
+=============================================
+ FILTERING TRAIN DATASET
+ Metric: NCC patches (best AUC)
+ AUC_3class=0.7281, AUC_2class=0.7632
+=============================================
+
+=== Filtering 15% worst from TRAIN (NCC patches) ===
+Using score column: 'ncc_mist_mpp1.0112_patches'
+Loaded 4642 samples
+Removed 696 worst samples (bottom 15.0%)
+Kept 3946 samples (85.0%)
+
+Score statistics (kept samples):
+  Min: 0.0024
+  Max: 0.5773
+  Mean: 0.0949
+  Std: 0.0905
+
+Saved filtered csv: /trinity/home/m.romanov/benchmarking/datasets/MIST_HER2_NCC_PATCHES_15/filtered_85percent.csv
+
+Creating train symlinks...
+Train links created: 3946
+
+Creating test symlinks...
+  testA: 1000 links
+  testB: 1000 links
+
+============================================================
+Done! Filtered dataset created at: /trinity/home/m.romanov/benchmarking/datasets/MIST_HER2_NCC_PATCHES_15
+============================================================
+
+=== Filtering 25% worst from TRAIN (NCC patches) ===
+Using score column: 'ncc_mist_mpp1.0112_patches'
+Loaded 4642 samples
+Removed 1160 worst samples (bottom 25.0%)
+Kept 3482 samples (75.0%)
+
+Score statistics (kept samples):
+  Min: 0.0140
+  Max: 0.5773
+  Mean: 0.1064
+  Std: 0.0903
+
+Saved filtered csv: /trinity/home/m.romanov/benchmarking/datasets/MIST_HER2_NCC_PATCHES_25/filtered_75percent.csv
+
+Creating train symlinks...
+Train links created: 3482
+
+Creating test symlinks...
+  testA: 1000 links
+  testB: 1000 links
+
+============================================================
+Done! Filtered dataset created at: /trinity/home/m.romanov/benchmarking/datasets/MIST_HER2_NCC_PATCHES_25
+============================================================
+
+=============================================
+ Done! Filtered datasets created.
+=============================================
