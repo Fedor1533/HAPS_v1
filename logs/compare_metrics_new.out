@@ -23,7 +23,7 @@
 Базовый файл: lpips_mpp_downsample.csv
   Записей: 266
   Колонок: 8
-  Колонки: ['pname', 'patch_id', 'Similarity_Score', 'rdist', 'class3', 'fixed_path', 'warped_path', 'lpips_mist_mpp1.0112_downsample']
+  Колонки: ['pname', 'patch_id', 'Similarity_Score', 'rdist', 'class3', 'warped_path', 'fixed_path', 'lpips_mist_mpp1.0112_downsample']
   ВНИМАНИЕ: Отсутствуют базовые колонки: ['dist', 'class']
   Пропущена (уже существует): Similarity_Score
   Пропущена (уже существует): class3
@@ -95,55 +95,55 @@
 
 ────────────────────────────────────────
 Метрика: lpips_mist_mpp1.0112_downsample
-  Mean ± Std: 0.5815 ± 0.0488
+  Mean ± Std: 0.5962 ± 0.0403
 
   3-классовая классификация:
-   AUC для пары 0 vs 1: 0.7160
-   AUC для пары 0 vs 2: 0.8126
-   AUC для пары 1 vs 2: 0.6412
-  → Macro-AUC (3 класса): 0.7233
+   AUC для пары 0 vs 1: 0.7821
+   AUC для пары 0 vs 2: 0.9265
+   AUC для пары 1 vs 2: 0.7418
+  → Macro-AUC (3 класса): 0.8168
 
   2-классовая классификация:
-  → AUC (2 класса): 0.6580
+  → AUC (2 класса): 0.7599
 
 ────────────────────────────────────────
 Метрика: lpips_mist_mpp1.0112_patches
-  Mean ± Std: 0.5739 ± 0.0471
+  Mean ± Std: 0.5866 ± 0.0387
 
   3-классовая классификация:
-   AUC для пары 0 vs 1: 0.7032
-   AUC для пары 0 vs 2: 0.8045
-   AUC для пары 1 vs 2: 0.6467
-  → Macro-AUC (3 класса): 0.7182
+   AUC для пары 0 vs 1: 0.7878
+   AUC для пары 0 vs 2: 0.9248
+   AUC для пары 1 vs 2: 0.7525
+  → Macro-AUC (3 класса): 0.8217
 
   2-классовая классификация:
-  → AUC (2 класса): 0.6622
+  → AUC (2 класса): 0.7693
 
 ────────────────────────────────────────
 Метрика: lpips_full
-  Mean ± Std: 0.6040 ± 0.0421
+  Mean ± Std: 0.6271 ± 0.0346
 
   3-классовая классификация:
-   AUC для пары 0 vs 1: 0.5244
-   AUC для пары 0 vs 2: 0.5778
-   AUC для пары 1 vs 2: 0.5635
-  → Macro-AUC (3 класса): 0.5552
+   AUC для пары 0 vs 1: 0.7654
+   AUC для пары 0 vs 2: 0.8849
+   AUC для пары 1 vs 2: 0.7095
+  → Macro-AUC (3 класса): 0.7866
 
   2-классовая классификация:
-  → AUC (2 класса): 0.5649
+  → AUC (2 класса): 0.7267
 
 ────────────────────────────────────────
 Метрика: lpips_patches
-  Mean ± Std: 0.6075 ± 0.0429
+  Mean ± Std: 0.6205 ± 0.0334
 
   3-классовая классификация:
-   AUC для пары 0 vs 1: 0.5327
-   AUC для пары 0 vs 2: 0.6050
-   AUC для пары 1 vs 2: 0.5716
-  → Macro-AUC (3 класса): 0.5698
+   AUC для пары 0 vs 1: 0.7660
+   AUC для пары 0 vs 2: 0.8809
+   AUC для пары 1 vs 2: 0.7132
+  → Macro-AUC (3 класса): 0.7867
 
   2-классовая классификация:
-  → AUC (2 класса): 0.5749
+  → AUC (2 класса): 0.7296
 
 ────────────────────────────────────────
 Метрика: ncc_mist_mpp1.0112_downsample
@@ -210,24 +210,24 @@
 ======================================================================
 Метрика                                       AUC (3 класса)     AUC (2 класса)    
 ---------------------------------------------------------------------------------
-lpips_mist_mpp1.0112_downsample               0.7233             0.6580            
-lpips_mist_mpp1.0112_patches                  0.7182             0.6622            
-lpips_full                                    0.5552             0.5649            
-lpips_patches                                 0.5698             0.5749            
+lpips_mist_mpp1.0112_downsample               0.8168             0.7599            
+lpips_mist_mpp1.0112_patches                  0.8217             0.7693            
+lpips_full                                    0.7866             0.7267            
+lpips_patches                                 0.7867             0.7296            
 ncc_mist_mpp1.0112_downsample                 0.6729             0.7532            
 ncc_mist_mpp1.0112_patches                    0.7330             0.7654            
 ncc_full                                      0.6600             0.7375            
 ncc_patches                                   0.7049             0.7468            
 
-Лучшая метрика (3 класса): ncc_mist_mpp1.0112_patches_3class с AUC = 0.7330
-Лучшая метрика (2 класса): ncc_mist_mpp1.0112_patches_2class с AUC = 0.7654
+Лучшая метрика (3 класса): lpips_mist_mpp1.0112_patches_3class с AUC = 0.8217
+Лучшая метрика (2 класса): lpips_mist_mpp1.0112_patches_2class с AUC = 0.7693
 
 ============================================================
 ВИЗУАЛИЗАЦИЯ
 ============================================================
-Сохранен боксплот: /trinity/home/m.romanov/benchmarking/HAPS_v1/analysis/boxplots/metrics_boxplots_3class_20260803_134758.png
-Сохранен боксплот: /trinity/home/m.romanov/benchmarking/HAPS_v1/analysis/boxplots/metrics_boxplots_2class_20260803_134759.png
-Сохранено сравнение AUC: /trinity/home/m.romanov/benchmarking/HAPS_v1/analysis/auc/auc_comparison_20260803_134800.png
+Сохранен боксплот: /trinity/home/m.romanov/benchmarking/HAPS_v1/analysis/boxplots/metrics_boxplots_3class_20260803_161802.png
+Сохранен боксплот: /trinity/home/m.romanov/benchmarking/HAPS_v1/analysis/boxplots/metrics_boxplots_2class_20260803_161804.png
+Сохранено сравнение AUC: /trinity/home/m.romanov/benchmarking/HAPS_v1/analysis/auc/auc_comparison_20260803_161805.png
 
 Результаты сохранены в: /trinity/home/m.romanov/benchmarking/HAPS_v1/analysis/auc_results.csv
 Готово. Результаты в: /trinity/home/m.romanov/benchmarking/HAPS_v1/analysis
