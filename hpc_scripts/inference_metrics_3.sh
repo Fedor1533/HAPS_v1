@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=test_i
-#SBATCH --partition=ais-gpu
+#SBATCH --partition=gpu
 #SBATCH --gres=gpu:1
 #SBATCH --mem=40G
 #SBATCH --cpus-per-task=4
