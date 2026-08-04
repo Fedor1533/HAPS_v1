@@ -5,8 +5,8 @@
 #SBATCH --mem=40G
 #SBATCH --cpus-per-task=4
 #SBATCH --time=12:00:00
-#SBATCH --output=../logs/inference_test_3.out
-#SBATCH --error=../logs/inference_test_3.err
+#SBATCH --output=../logs/inference_train.out
+#SBATCH --error=../logs/inference_train.err
 
 unset PYTHONHOME
 unset PYTHONPATH
@@ -14,7 +14,7 @@ source ~/miniconda3/etc/profile.d/conda.sh
 conda activate PSPStain
 cd ~/benchmarking/HAPS_v1
 
-CSV_PATH="mist_test_classification_balanced.csv"
+CSV_PATH="mist_train_classification_872.csv"
 DEVICE="cuda"
 
 # MPP параметры

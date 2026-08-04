@@ -1,12 +1,12 @@
 #!/bin/bash
 #SBATCH --job-name=compare
-#SBATCH --partition=ais-gpu
+#SBATCH --partition=gpu
 #SBATCH --gres=gpu:1
 #SBATCH --mem=40G
 #SBATCH --cpus-per-task=4
 #SBATCH --time=3:00:00
-#SBATCH --output=../logs/compare_metrics_new.out
-#SBATCH --error=../logs/compare_metrics_new.err
+#SBATCH --output=../logs/compare_metrics_new_train.out
+#SBATCH --error=../logs/compare_metrics_new_train.err
 
 unset PYTHONHOME
 unset PYTHONPATH
