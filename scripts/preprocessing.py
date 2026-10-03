@@ -181,6 +181,11 @@ class MetricInput:
     # Метаданные
     bg_val: float # Значение фона (0.0 или 1.0) для "умной" заливки в метриках
 
+    # Сырые патчи (H, W, 3) uint8 — до любой предобработки.
+    # Нужны метрикам с собственной нормализацией (сегментация ядер Cellpose).
+    raw_src_np: np.ndarray = None
+    raw_trg_np: np.ndarray = None
+
 class Preprocessor:
     """
     Класс для предобработки примеров(paired imgs).
@@ -199,16 +204,17 @@ class Preprocessor:
         pre_src, pre_trg = preprocess_pair_numpy(w_patch, f_patch, config)
         
         # 2. Вычисление маски (закомментировано — пока не используется)
+        # Считается по сырым uint8, до предобработки: полярность и контраст
+        # после flip/CLAHE непредсказуемы, а порог 230 осмыслен только на исходных RGB.
         mask_np = None
-        # if config.get('binary_mask', False):
-        #     f_mask = create_non_white_mask(f_patch, threshold=230)
-        #     w_mask = create_non_white_mask(w_patch, threshold=230)
-        #     mask_np = np.logical_or(f_mask, w_mask).astype(np.uint8)
-        #     
-        #     # Проверка на пустую маску ткани
-        #     mask_mean = np.mean(mask_np)
-        #     if mask_mean < 0.1:
-        #         print(f"WARNING: Tissue mask is too small ({mask_mean:.3f})!")
+#         if config.get('binary_mask', False):
+#             f_mask = create_non_white_mask(f_patch, threshold=230)
+#             w_mask = create_non_white_mask(w_patch, threshold=230)
+#             mask_np = np.logical_or(f_mask, w_mask).astype(np.uint8)
+
+#             # Слишком мало ткани — маска сделает метрику шумной, откатываемся к полному кадру
+#             if mask_np.mean() < 0.05:
+#                 mask_np = None
         
         # 3. Определяем цвет фона: flip_intensity=True -> фон черный (0.0). Иначе белый (1.0).
         bg_val = 0.0 if config['flip_intensity'] else 1.0
@@ -235,4 +241,5 @@ class Preprocessor:
             src_t = src_t.repeat(1, 3, 1, 1)
             trg_t = trg_t.repeat(1, 3, 1, 1)
 
-        return MetricInput(src_np, trg_np, mask_np, src_t, trg_t, mask_t, bg_val)
+        return MetricInput(src_np, trg_np, mask_np, src_t, trg_t, mask_t, bg_val,
+                           raw_src_np=w_patch, raw_trg_np=f_patch)

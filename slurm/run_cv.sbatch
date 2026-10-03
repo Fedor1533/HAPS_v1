@@ -1,13 +1,14 @@
 #!/bin/bash
 #SBATCH --job-name=haps_cv
 #SBATCH --partition=gpu
-#SBATCH --gres=gpu:1
+#SBATCH --nodes=1                                  # node count
+#SBATCH --ntasks-per-node=1                        # total number of tasks per node
+#SBATCH --gpus=1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=48G
 #SBATCH --time=1-00:00:00
-#SBATCH --output=%x_%j.out
-#SBATCH --error=%x_%j.err
-#
+#SBATCH --output=sbatch_logs/log_%x_%j.txt
+
 # Полный nested CV прогон одной/нескольких метрик.
 #
 # Запуск (позиционные аргументы — безопасно для списков с запятыми):
@@ -18,15 +19,14 @@
 #   $2 = OUTPUT (необязательно; по умолчанию ../results/<ids>_<jobid>.pkl)
 #
 # Прочие параметры — через --export=ALL,CSV=...,NJOBS=...,OUTER_SEED=...
-# ВНИМАНИЕ: не передавайте списки с запятыми через --export (sbatch трактует
-# запятую как разделитель переменных) — используйте позиционный $1.
+# ВНИМАНИЕ: не передавайте списки с запятыми через --export (sbatch трактует запятую как разделитель переменных) — используйте позиционный $1.
 
-export REPO="${REPO:-/trinity/home/vladislav.kozlovskiy/HAPS/HAPS_v1}"
+export REPO="${REPO:-/beegfs/home/f.gubanov/f.gubanov/bimai_lab/HAPS_v1_Vladislav}"
 source "${REPO}/slurm/env.sh"
 
 IDENTITIES="${1:-${IDENTITIES:-ncc,psnr,mi,ssim}}"
 OUTPUT="${2:-${OUTPUT:-}}"
-CSV="${CSV:-/trinity/home/vladislav.kozlovskiy/archieve/filtration_imgs/exp_full_local.csv}"
+CSV="${CSV:-/beegfs/home/f.gubanov/f.gubanov/bimai_lab/filtration_imgs/exp_full.csv}"
 NJOBS="${NJOBS:-1}"
 OUTER_SEED="${OUTER_SEED:-155}"
 SAFE_ID="$(echo "${IDENTITIES}" | tr ',' '-')"

@@ -27,11 +27,25 @@ dependencies = [
     "gdown>=4.7",
     # Транзитивные зависимости с обрезанным набором manylinux2014-колёс (glibc 2.17):
     "fastremap<=1.17.4",
+    # HF foundation backbones (phikon / hibou_l via transformers)
+    "huggingface_hub>=0.20,<0.28",
+    "transformers>=4.36,<4.46",
+    "safetensors>=0.4,<0.5",
 ]
 
 [project.optional-dependencies]
-# TransPath (метрика `transpath`) ставится отдельно: код модели + patched timm
-# + веса ctranspath.pth. См. scripts/setup_transpath.sh и AGENTS.md.
+# UNI2 / Virchow2 / H-optimus / GigaPath / ctranspath_hf — нужен modern timm.
+# Конфликтует с patched timm-0.5.4 (локальный `transpath`). Ставить ПОСЛЕ
+# завершения локального CTransPath-прогона:
+#   uv sync --extra foundation
+#   # либо: .venv/bin/python -m pip install 'timm>=1.0.3,<1.1'
+foundation = [
+    "timm>=1.0.3,<1.1",
+    # segment-anything нужен для Cellpose-SAM (cpsam). Сам cellpose>=4
+    # ставится поверх в scripts/setup_foundation.sh, чтобы не ломать
+    # cellpose 2.x в основном .venv (cyto2).
+    "segment-anything>=1.0",
+]
 
 [tool.uv]
 # torch/torchvision тянем из CUDA-индекса PyTorch (cu121).

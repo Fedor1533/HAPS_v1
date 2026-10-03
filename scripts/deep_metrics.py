@@ -205,44 +205,96 @@ def calc_lpips_cellpose(src_t, trg_t, model: "LPIPSCellpose") -> float:
     return -dist
 
 
+def extract_cellpose_features(encoder: "CellposeEncoder", x01: torch.Tensor) -> dict:
+    """
+    Фичи Cellpose downsample: layer_0..layer_{L-1} + neck (= последний).
+    Значения — feature-map (B, C, H, W); для sim flatten'ятся в calc_*.
+    """
+    maps = encoder(x01)
+    out = {f"layer_{i}": maps[i] for i in range(len(maps))}
+    out["neck"] = maps[-1]
+    return out
+
+
+def _agg_pairs(pairs, agg: str) -> float:
+    if agg == "cos":
+        vals = [_cosine(a, b) for a, b in pairs]
+        return float(sum(vals) / len(vals))
+    if agg == "dist":
+        vals = [_normalized_dist(a, b) for a, b in pairs]
+        return -float(sum(vals) / len(vals))
+    raise ValueError(f"Unknown agg: {agg}")
+
+
 def calc_cellpose(
     src_t, trg_t, encoder: "CellposeEncoder", feature: str = "neck", agg: str = "cos"
 ) -> float:
     """
     Similarity по фичам энкодера Cellpose.
-      feature: "neck" (последний слой) | "mean" (усреднение по всем 4 слоям)
-      agg:     "cos" (cosine sim) | "dist" (normalized L2 -> возвращаем -dist)
+      feature: "neck" | "mean" | "layer_k"
+      agg:     "cos" | "dist"  (dist → -normalized L2)
     """
     with torch.inference_mode():
-        f0 = encoder(src_t)
-        f1 = encoder(trg_t)
+        f0 = extract_cellpose_features(encoder, src_t)
+        f1 = extract_cellpose_features(encoder, trg_t)
 
-    if feature == "neck":
-        pairs = [(f0[-1], f1[-1])]
-    elif feature == "mean":
-        pairs = list(zip(f0, f1))
+    keys = list(f0.keys())
+    if feature == "mean":
+        layer_keys = [k for k in keys if k.startswith("layer_")]
+        pairs = [(f0[k], f1[k]) for k in layer_keys]
+    elif feature in f0:
+        pairs = [(f0[feature], f1[feature])]
     else:
-        raise ValueError(f"Unknown cellpose feature: {feature}")
-
-    if agg == "cos":
-        vals = [_cosine(a, b) for a, b in pairs]
-        return float(sum(vals) / len(vals))
-    elif agg == "dist":
-        vals = [_normalized_dist(a, b) for a, b in pairs]
-        return -float(sum(vals) / len(vals))
-    raise ValueError(f"Unknown cellpose agg: {agg}")
+        raise ValueError(f"Unknown cellpose feature: {feature}. Known: {keys + ['mean']}")
+    return _agg_pairs(pairs, agg)
 
 
-def calc_transpath(src_t, trg_t, model, agg: str = "cos") -> float:
+def extract_transpath_features(model, x01: torch.Tensor) -> dict:
     """
-    Similarity по эмбеддингу CTransPath.
-      agg: "cos" (cosine sim) | "dist" (L2 -> возвращаем -dist)
+    vs-filtering-style: cosine-ready tensors после каждого Swin-блока + neck.
+
+    layer_k — полный spatial/token map (flatten в sim, как в vs-filtering).
+    neck    — mean по токенам после model.norm (== model forward с Identity head).
+    """
+    x = _transpath_input(x01)
+    out = {}
+    z = model.patch_embed(x)
+    layer_idx = 0
+    for stage in model.layers:
+        for block in stage.blocks:
+            z = block(z)
+            out[f"layer_{layer_idx}"] = z
+            layer_idx += 1
+        if stage.downsample is not None:
+            z = stage.downsample(z)
+    z = model.norm(z)
+    out["neck"] = z.mean(dim=1)
+    return out
+
+
+def calc_transpath(
+    src_t, trg_t, model, agg: str = "cos", feature: str = "neck"
+) -> float:
+    """
+    Similarity по CTransPath.
+      feature: "neck" | "mean" | "layer_k"  (layer_* — как в vs-filtering)
+      agg:     "cos" | "dist"
     """
     with torch.inference_mode():
-        e0 = model(_transpath_input(src_t))
-        e1 = model(_transpath_input(trg_t))
-    if agg == "cos":
-        return _cosine(e0, e1)
-    elif agg == "dist":
-        return -_normalized_dist(e0, e1)
-    raise ValueError(f"Unknown transpath agg: {agg}")
+        f0 = extract_transpath_features(model, src_t)
+        f1 = extract_transpath_features(model, trg_t)
+
+    keys = list(f0.keys())
+    if feature == "mean":
+        layer_keys = [k for k in keys if k.startswith("layer_")]
+        pairs = [(f0[k], f1[k]) for k in layer_keys]
+    elif feature in f0:
+        pairs = [(f0[feature], f1[feature])]
+    else:
+        raise ValueError(f"Unknown transpath feature: {feature}. Known: {keys + ['mean']}")
+    return _agg_pairs(pairs, agg)
+
+
+# Известные feature-имена для nested-CV search space (Swin-T = 12 блоков).
+TRANSPATH_FEATURES = [f"layer_{i}" for i in range(12)] + ["neck", "mean"]
+CELLPOSE_FEATURES = [f"layer_{i}" for i in range(4)] + ["neck", "mean"]

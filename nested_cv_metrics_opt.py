@@ -16,7 +16,7 @@ import multiprocessing as mp
 
 import torch
 import sys
-sys.path.append('/beegfs/home/f.gubanov/f.gubanov/bimai_lab/metrics_code_v2')
+# sys.path.append('/beegfs/home/f.gubanov/f.gubanov/bimai_lab/metrics_code_v2')
 from scripts.preprocessing import Preprocessor
 from scripts.metrics import calc_ncc, calc_psnr, calc_mi, calc_ssim, calc_ms_ssim, calc_fsim, calc_lpips, calc_dists
 from scripts.eval_metrics import calculate_smart_auc
@@ -62,6 +62,8 @@ def _make_lpips_wrapper(backbone):
 # Глубокие метрики из vs-filtering (Cellpose / LPIPS-Cellpose / TransPath) — ленивые
 # ---------------------------------------------------------------------------
 from scripts.deep_metrics import (
+    CELLPOSE_FEATURES,
+    TRANSPATH_FEATURES,
     CellposeEncoder,
     LPIPSCellpose,
     _load_ctranspath,
@@ -69,6 +71,9 @@ from scripts.deep_metrics import (
     calc_lpips_cellpose,
     calc_transpath,
 )
+from scripts.foundation_metrics import foundation_feature_names
+from scripts.foundation_metrics import FOUNDATION_BACKBONES, calc_foundation
+# from scripts.structural_metrics import calc_flow_residual, calc_ngf, calc_nuclei_geometry, calc_tile_stat
 
 _CELLPOSE_ENCODER = None
 _LPIPS_CELLPOSE_MODEL = None
@@ -94,6 +99,15 @@ def _get_transpath_model():
     if _TRANSPATH_MODEL is None:
         _TRANSPATH_MODEL = _load_ctranspath(device, weights_path=None, repo_root=None)
     return _TRANSPATH_MODEL
+
+
+def _make_foundation_wrapper(name):
+    """Фабрика METRICS_MAP-лямбды для HF foundation-бэкбона."""
+    def wrapper(inp, agg="cos", feature="neck", **kw):
+        return calc_foundation(
+            inp.src_t, inp.trg_t, name=name, agg=agg, feature=feature, device=device
+        )
+    return wrapper
 
 # ---------------------------------------------------------------------------
 # Утилиты (из старого test_metrics.py)
@@ -140,15 +154,21 @@ def extract_value(val):
 COMMON_FLAGS = {
     "normalization":    [False, True],
     "channel_mode":     ["gray", "hed"],
-    "flip_intensity":   [False, True], # [False]
+    "flip_intensity":   [False, True], 
     "match_histogram":  [False, True],
-    "clahe":            [False, True], # [False]
+    "clahe":            [False, True],
     "smoothing":        [False, True],
+    # # Маска ткани (объединение non-white областей пары). Включается только там,
+    # # где метрика умеет её учитывать — иначе половину кадра занимает белый фон, и он разбавляет сигнал.
+    # "binary_mask":      [False],
 }
+
+# _MASK_FLAG = {"binary_mask": [False, True]}
 
 METRIC_IDENTITIES = {
     "ncc": {
         "channel_mode": ["gray", "hed"],
+        # "flags": _MASK_FLAG,
     },
     "psnr": {
         "channel_mode": ["gray", "hed"],
@@ -193,15 +213,76 @@ METRIC_IDENTITIES = {
     "cellpose": {
         "channel_mode": ["gray", "hed", "rgb"],
         "params": {
-            "feature": ["neck", "mean"],
+            "feature": list(CELLPOSE_FEATURES),
             "agg": ["cos", "dist"],
         },
     },
     "transpath": {
-        "channel_mode": ["rgb", "hed"],
+        # layer-sweep × полный COMMON_FLAGS слишком дорогой; оставляем флаги,
+        # которые реально выбирались раньше (flip + histmatch), rgb-only.
+        "channel_mode": ["rgb"],
+        "flags": {
+            "normalization": [False],
+            "clahe": [False],
+            "smoothing": [False],
+        },
         "params": {
+            "feature": list(TRANSPATH_FEATURES),
             "agg": ["cos", "dist"],
         },
+    },
+    # --- Структурные метрики: геометрия вместо внешнего вида ---
+    # У всех них часть общих флагов зафиксирована, потому что метрика к ним
+    # инвариантна аналитически — гонять по ним поиск значит платить за
+    # дублирующиеся конфиги.
+    # "nuclei": {
+    #     # Сегментация идёт по сырым патчам и нормализуется Cellpose'ом сама,
+    #     # поэтому препроцессинг CV на эту метрику не влияет вообще — фиксируем
+    #     # его целиком, иначе 32 идентичных конфига считались бы заново.
+    #     "channel_mode": ["rgb"],
+    #     "flags": {
+    #         "normalization": [False], "flip_intensity": [False],
+    #         "match_histogram": [False], "clahe": [False], "smoothing": [False],
+    #         "binary_mask": [False],
+    #     },
+    #     "params": {
+    #         # prob_ngf в поиск не включён: по диагностике он выходит ~0.2 для любой
+    #         # пары независимо от качества регистрации, то есть ничего не различает.
+    #         "stat": ["dice", "match_rate", "median_resid", "chamfer",
+    #                  "ransac_inliers", "prob_ncc", "prob_tile"],
+    #         "radius": [5.0, 10.0],
+    #         "diameter": [12.0, 20.0],
+    #         # Модель зафиксирована на cyto2: у cellpose-модели `nuclei` на канале
+    #         # гематоксилина детекция асимметрична катастрофически (119 объектов в
+    #         # H&E против 6 в IHC), сопоставлять такие облака бессмысленно.
+    #         "channel": ["gray", "hem"],
+    #     },
+    # },
+    # --- Pathology foundation models (HF embeddings → cosine / -L2) ---
+    # Plain: полный препроцесс-грид (rgb/hed + COMMON_FLAGS) + layer sweep.
+    # Слои батчатся одним forward на препроцесс-группу → грид подъёмный.
+    **{
+        name: {
+            "channel_mode": ["rgb", "hed"],
+            "params": {
+                "agg": ["cos", "dist"],
+                "feature": foundation_feature_names(name),
+            },
+        }
+        for name in FOUNDATION_BACKBONES
+    },
+    # `<name>_spec`: mean/std/crop из спеки модели; канал rgb; без flip
+    # (инверсия ломает ImageNet/histology-норму). Остальные флаги — в поиске.
+    **{
+        f"{name}_spec": {
+            "channel_mode": ["rgb"],
+            "flags": {"flip_intensity": [False]},
+            "params": {
+                "agg": ["cos", "dist"],
+                "feature": foundation_feature_names(name),
+            },
+        }
+        for name in FOUNDATION_BACKBONES
     },
 }
 
@@ -220,7 +301,14 @@ METRICS_MAP = {
     # --- Глубокие метрики из vs-filtering (все calc_* возвращают similarity) ---
     "lpips_cellpose": lambda inp, **kw: calc_lpips_cellpose(inp.src_t, inp.trg_t, _get_lpips_cellpose_model()),
     "cellpose":       lambda inp, feature="neck", agg="cos", **kw: calc_cellpose(inp.src_t, inp.trg_t, _get_cellpose_encoder(), feature=feature, agg=agg),
-    "transpath":      lambda inp, agg="cos", **kw: calc_transpath(inp.src_t, inp.trg_t, _get_transpath_model(), agg=agg),
+    "transpath":      lambda inp, agg="cos", feature="neck", **kw: calc_transpath(inp.src_t, inp.trg_t, _get_transpath_model(), agg=agg, feature=feature),
+    # --- Структурные метрики ---
+    # "nuclei": lambda inp, stat="ransac_inliers", radius=10.0, diameter=12.0, channel="gray", **kw: calc_nuclei_geometry(
+    #     inp.raw_src_np, inp.raw_trg_np, stat=stat, radius=radius, diameter=diameter,
+    #     channel=channel, model_type="cyto2", device=device),
+    # HF foundation backbones
+    **{name: _make_foundation_wrapper(name) for name in FOUNDATION_BACKBONES},
+    **{f"{name}_spec": _make_foundation_wrapper(name) for name in FOUNDATION_BACKBONES},
 }
 
 # ---------------------------------------------------------------------------
@@ -236,6 +324,10 @@ def generate_configs(identity_name):
     # общие флаги, но channel_mode заменяем на identity-specific
     flags = dict(COMMON_FLAGS)
     flags["channel_mode"] = list(identity_channel_modes)
+
+    # identity может сузить любой из общих флагов (не попадает в kwargs метрики)
+    for k, v in info.get("flags", {}).items():
+        flags[k] = list(v)
 
     # metric-specific hyperparams
     for k, v in identity_params.items():
@@ -384,11 +476,101 @@ def _eval_config_on_folds(scores_all, inner_splits, y_class3, y_1_5):
     }
 
 
+def _preproc_signature(config):
+    """Ключ препроцесса без metric-specific params (feature/agg/…)."""
+    skip = {"metric", "feature", "agg", "lpips_aggregation", "stat", "tile",
+            "eta", "radius", "diameter", "channel", "on", "min_resp", "win_size"}
+    items = tuple(sorted((k, config[k]) for k in config if k not in skip))
+    return items
+
+
+def _layer_scores_for_pairs(identity_name, config, pairs):
+    """
+    Один forward на пару → dict[feature -> np.ndarray scores] для cos и dist.
+    Используется, чтобы не гонять ViT заново на каждый layer_k.
+    Возвращает: {(feature, agg): scores_array}
+    """
+    from scripts.deep_metrics import (
+        extract_cellpose_features,
+        extract_transpath_features,
+        _agg_pairs,
+    )
+    from scripts.foundation_metrics import (
+        extract_foundation_features,
+        prepare_input,
+        get_foundation_model,
+        _score_feature_pair,
+    )
+
+    preprocessor = Preprocessor(device=device)
+    # base name without _spec
+    base = identity_name[:-5] if identity_name.endswith("_spec") else identity_name
+
+    # accumulate lists per (feature, agg)
+    buckets = {}
+
+    if base == "cellpose":
+        enc = _get_cellpose_encoder()
+        with torch.inference_mode():
+            for f_patch, w_patch in pairs:
+                inp = preprocessor.process(f_patch, w_patch, config)
+                f0 = extract_cellpose_features(enc, inp.src_t)
+                f1 = extract_cellpose_features(enc, inp.trg_t)
+                feats = list(f0.keys()) + ["mean"]
+                for feat in feats:
+                    for agg in ("cos", "dist"):
+                        if feat == "mean":
+                            keys = [k for k in f0 if k.startswith("layer_")]
+                            pairs_t = [(f0[k], f1[k]) for k in keys]
+                        else:
+                            pairs_t = [(f0[feat], f1[feat])]
+                        buckets.setdefault((feat, agg), []).append(_agg_pairs(pairs_t, agg))
+    elif base == "transpath":
+        model = _get_transpath_model()
+        with torch.inference_mode():
+            for f_patch, w_patch in pairs:
+                inp = preprocessor.process(f_patch, w_patch, config)
+                f0 = extract_transpath_features(model, inp.src_t)
+                f1 = extract_transpath_features(model, inp.trg_t)
+                feats = list(f0.keys()) + ["mean"]
+                for feat in feats:
+                    for agg in ("cos", "dist"):
+                        if feat == "mean":
+                            keys = [k for k in f0 if k.startswith("layer_")]
+                            pairs_t = [(f0[k], f1[k]) for k in keys]
+                        else:
+                            pairs_t = [(f0[feat], f1[feat])]
+                        buckets.setdefault((feat, agg), []).append(_agg_pairs(pairs_t, agg))
+    elif base in FOUNDATION_BACKBONES:
+        # calc_foundation_all_features only does cos — compute both aggs from feats
+        spec, model = get_foundation_model(base, device=device)
+        with torch.inference_mode():
+            for f_patch, w_patch in pairs:
+                inp = preprocessor.process(f_patch, w_patch, config)
+                x0 = prepare_input(spec, inp.src_t)
+                x1 = prepare_input(spec, inp.trg_t)
+                f0 = extract_foundation_features(base, model, x0)
+                f1 = extract_foundation_features(base, model, x1)
+                feats = list(f0.keys()) + ["mean"]
+                for feat in feats:
+                    for agg in ("cos", "dist"):
+                        buckets.setdefault((feat, agg), []).append(
+                            _score_feature_pair(f0, f1, feat, agg)
+                        )
+    else:
+        return None
+
+    return {k: np.asarray(v, dtype=float) for k, v in buckets.items()}
+
+
 def run_inner_cv_group(identity_names, configs, all_pairs, meta_df, outer_train_idx, seed=42, use_tqdm=True):
     """
     Для группы метрик с одинаковым search space и одного outer fold:
       - Для каждого конфига: ОДИН проход preprocessor.process -> MetricInput
       - Затем для каждой identity в группе: metric_fn(inp) -> scores -> inner fold eval
+
+    Если у identity есть param `feature` (layer-sweep), конфиги с одним и тем же
+    препроцессом считаются ОДНИМ forward'ом на все layer_k.
     
     Возвращает: {identity_name: [{cfg_idx, config, inner_sp_mean, ...}, ...]}
     """
@@ -403,6 +585,52 @@ def run_inner_cv_group(identity_names, configs, all_pairs, meta_df, outer_train_
     inner_splits = list(inner_splitter.split(np.zeros(len(train_meta)), y_class3, groups))
 
     all_results = {name: [] for name in identity_names}
+
+    # Layer-aware fast path: только если ровно одна identity и у неё есть feature.
+    layerable = (
+        len(identity_names) == 1
+        and "feature" in METRIC_IDENTITIES.get(identity_names[0], {}).get("params", {})
+    )
+
+    if layerable:
+        name = identity_names[0]
+        # group configs by preprocess signature
+        by_pre = {}
+        for cfg_idx, config in enumerate(configs):
+            by_pre.setdefault(_preproc_signature(config), []).append((cfg_idx, config))
+
+        iterator = tqdm(list(by_pre.items()), desc="  preproc-groups", leave=False) if use_tqdm else by_pre.items()
+        for _sig, cfg_list in iterator:
+            # любой конфиг группы — один и тот же препроцесс
+            base_cfg = cfg_list[0][1]
+            cached = _layer_scores_for_pairs(name, base_cfg, train_pairs)
+            if cached is None:
+                # fallback
+                for cfg_idx, config in cfg_list:
+                    scores_dict = compute_scores_for_config(config, train_pairs, [name])
+                    agg = _eval_config_on_folds(scores_dict[name], inner_splits, y_class3, y_1_5)
+                    all_results[name].append({
+                        "cfg_idx": cfg_idx,
+                        "config": {**config, "metric": name},
+                        **agg,
+                    })
+                continue
+            for cfg_idx, config in cfg_list:
+                feat = config.get("feature", "neck")
+                agg_name = config.get("agg", "cos")
+                key = (feat, agg_name)
+                if key not in cached:
+                    # feature отсутствует у модели (depth меньше ожидаемого) — skip/NaN
+                    scores_all = np.full(len(train_pairs), np.nan)
+                else:
+                    scores_all = cached[key]
+                agg = _eval_config_on_folds(scores_all, inner_splits, y_class3, y_1_5)
+                all_results[name].append({
+                    "cfg_idx": cfg_idx,
+                    "config": {**config, "metric": name},
+                    **agg,
+                })
+        return all_results
 
     iterator = tqdm(configs, desc="  configs", leave=False) if use_tqdm else configs
     for cfg_idx, config in enumerate(iterator):
@@ -538,7 +766,9 @@ def _process_single_fold(fold_id, all_pairs, meta_df, outer_tr, outer_va, identi
 
 _GPU_METRICS = {
     "lpips_alex", "lpips_vgg", "lpips_squeeze", "dists",
-    "lpips_cellpose", "cellpose", "transpath",
+    "lpips_cellpose", "cellpose", "transpath", "nuclei",
+    *FOUNDATION_BACKBONES.keys(),
+    *(f"{name}_spec" for name in FOUNDATION_BACKBONES),
 }
 
 def run_outer_cv(dataset, identities=None, outer_seed=155, n_jobs=1):
@@ -606,15 +836,21 @@ def run_outer_cv(dataset, identities=None, outer_seed=155, n_jobs=1):
 # Per-fold нормализация OOF predictions (rank → [0, 1])
 # ---------------------------------------------------------------------------
 
-def normalize_oof_per_fold(oof_predictions):
+def normalize_oof_per_fold(oof_predictions, metrics=None):
     """
     Rank-нормализация similarity_score внутри каждой (metric, fold) пары.
     Решает проблему несопоставимого масштаба между фолдами (например, lin vs avg в LPIPS).
     Spearman/AUC инвариантны к этой трансформации внутри fold.
+
+    metrics: None = нормализовать все метрики; список имён метрик = только их.
     """
     df = pd.DataFrame(oof_predictions)
-    df["similarity_score"] = df.groupby(["metric", "fold"])["similarity_score"].transform(
-        lambda x: (scipy.stats.rankdata(x) - 1) / (len(x) - 1) if len(x) > 1 else x
+    if metrics is None:
+        metrics = df["metric"].unique().tolist()
+    mask = df["metric"].isin(metrics)
+    df.loc[mask, "similarity_score"] = (
+        df[mask].groupby(["metric", "fold"])["similarity_score"]
+        .transform(lambda x: (scipy.stats.rankdata(x) - 1) / (len(x) - 1) if len(x) > 1 else x)
     )
     return df.to_dict("records")
 

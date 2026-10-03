@@ -4,6 +4,9 @@ __pycache__/
 
 # uv / venv
 .venv/
+.venv-foundation/
+.uv-tmp/
+.uv-cache/
 
 # Результаты экспериментов и отчёты (крупные артефакты не коммитим)
 results/
@@ -19,3 +22,34 @@ slurm/*.err
 # TransPath: код модели и веса подтягиваются локально (см. scripts/setup_transpath.sh)
 TransPath/
 *.pth
+
+# Секреты / локальные токены
+.env
+.env.*
+**/hf_token
+**/*token*
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Результаты коллеги (старый датасет 522) — не коммитим
+results_vlad/
+
+# Slurm-логи в подпапке
+slurm/sbatch_logs/
+
+# Неиспользуемые экспериментальные/диагностические скрипты
+# (no-validation, layer-sweep, structural, A/B-диагностика)
+scripts/ab_foundation_old_vs_new.py
+scripts/diag_nuclei.py
+scripts/eval_deep_noval.py
+scripts/eval_foundation_noval.py
+scripts/eval_layers_fullgrid.py
+scripts/eval_layers_noval.py
+slurm/diag.sbatch
+slurm/run_deep_noval.sbatch
+slurm/run_fullgrid.sbatch
+slurm/run_layers_noval.sbatch
+slurm/submit_layers.sh
+slurm/submit_layers_rest.sh
+slurm/submit_structural.sh
