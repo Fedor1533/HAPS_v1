@@ -1,4 +1,4 @@
-pname,patch_id,Similarity_Score,rdist,class3,fixed_path,warped_path
+pname,patch_id,Similarity_Score,rdist,class3,warped_path,fixed_path
 12M2102884,12M2102884_10_7,0,0,0,/trinity/home/m.romanov/benchmarking/datasets/MIST_HER2/testB/12M2102884_10_7.jpg,/trinity/home/m.romanov/benchmarking/datasets/MIST_HER2/testA/12M2102884_10_7.jpg
 12M2102884,12M2102884_7_9,0,0,0,/trinity/home/m.romanov/benchmarking/datasets/MIST_HER2/testB/12M2102884_7_9.jpg,/trinity/home/m.romanov/benchmarking/datasets/MIST_HER2/testA/12M2102884_7_9.jpg
 48M2101314,48M2101314_40_34,0,0,0,/trinity/home/m.romanov/benchmarking/datasets/MIST_HER2/testB/48M2101314_40_34.jpg,/trinity/home/m.romanov/benchmarking/datasets/MIST_HER2/testA/48M2101314_40_34.jpg

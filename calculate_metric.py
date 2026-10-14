@@ -119,12 +119,12 @@ NCC_CONFIG = {
 }
 
 LPIPS_CONFIG = {
-    "normalization": True,
+    "normalization": False,
     "channel_mode": "rgb",
     "flip_intensity": True,
     "match_histogram": True,
-    "clahe": True,
-    "smoothing": True,
+    "clahe": False,
+    "smoothing": False,
     "metric": "lpips",
 }
 

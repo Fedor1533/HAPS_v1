@@ -35,7 +35,9 @@ def main():
 
     dataset = SimpleDataset(args.csv, dist_col='Similarity_Score', class_col='class3', return_meta=True)
     print(f"Loaded dataset: {len(dataset)}")
-
+    print("Dataset columns:" )
+    print(dataset.annotations.columns.tolist())
+    print(dataset.annotations.head())
     t0 = time.time()
     print(f"\nStarted nested CV (n_jobs={args.n_jobs}):\n")
     oof_preds, fold_meta, meta_df = n_cv_opt.run_outer_cv(dataset, identities=identities, outer_seed=args.outer_seed, n_jobs=args.n_jobs)

@@ -805,6 +805,10 @@ def run_outer_cv(dataset, identities=None, outer_seed=155, n_jobs=1):
     outer_splitter = StratifiedGroupKFold(n_splits=5, shuffle=True, random_state=outer_seed)
     outer_splits = list(outer_splitter.split(np.zeros(len(meta_df)), y, groups))
 
+    print("Outer splits:")
+    for i, (tr, va) in enumerate(outer_splits):
+        print(i, len(tr), len(va))
+
     if n_jobs == 1:
         # --- sequential ---
         oof_predictions = []

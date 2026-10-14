@@ -44,21 +44,14 @@ def downsample_by_scale(
 
     h, w = img.shape[:2]
 
-    new_w = max(
-        1,
-        int(round(w / scale))
-    )
-
-    new_h = max(
-        1,
-        int(round(h / scale))
-    )
+    new_w = max(1, int(round(w / scale)))
+    new_h = max(1, int(round(h / scale)))
 
     pil_img = Image.fromarray(img)
 
     pil_resized = pil_img.resize(
         (new_w, new_h),
-        resample=resample
+        resample=resample,
     )
 
     return np.array(pil_resized)
@@ -156,55 +149,36 @@ def center_crop(
 
     return img[
         top:top + crop_h,
-        left:left + crop_w
+        left:left + crop_w,
     ]
 
 
-def split_into_patches(
-    img,
-    patch_size=256,
-):
+def split_into_4_patches(img):
     """
-    Split image into non-overlapping patches.
+    Split image into 4 equal non-overlapping patches
+    by cutting in half along each axis.
 
     Example:
-
-        512x512
-            ↓
-        4 patches of 256x256
+        1024×1024 → 4× 512×512
+         472× 472 → 4× 236×236
 
     Returns
     -------
     list[np.ndarray]
+        [top-left, top-right, bottom-left, bottom-right]
     """
 
     h, w = img.shape[:2]
 
-    if h % patch_size != 0:
-        raise ValueError(
-            f"Height {h} is not divisible by "
-            f"patch_size={patch_size}"
-        )
+    half_h = h // 2
+    half_w = w // 2
 
-    if w % patch_size != 0:
-        raise ValueError(
-            f"Width {w} is not divisible by "
-            f"patch_size={patch_size}"
-        )
-
-    patches = []
-
-    for y in range(0, h, patch_size):
-        for x in range(0, w, patch_size):
-
-            patch = img[
-                y:y + patch_size,
-                x:x + patch_size
-            ]
-
-            patches.append(patch)
-
-    return patches
+    return [
+        img[:half_h,  :half_w ],   # top-left
+        img[:half_h,  half_w: ],   # top-right
+        img[half_h:,  :half_w ],   # bottom-left
+        img[half_h:,  half_w: ],   # bottom-right
+    ]
 
 
 def preprocess_pair_spatial(
@@ -214,8 +188,6 @@ def preprocess_pair_spatial(
     dataset="generic",
     source_mpp=None,
     target_mpp=None,
-    output_size=1024,
-    patch_size=256,
 ):
     """
     Spatial preprocessing of a paired image.
@@ -224,35 +196,44 @@ def preprocess_pair_spatial(
     -----
 
     full
-        Original image. Optionally resized to output_size.
+        Original image without any resizing.
+        For MIST: MPP correction is applied first.
 
     downsample
-        Image resized to output_size.
+        Same as full — MPP correction for MIST,
+        original size for generic.
+        Exists as a separate mode to distinguish
+        the physically rescaled image from the original.
 
     patches
-        Image resized to 512x512 and split into
-        4 patches of 256x256.
+        Same downsampling as above, then split
+        into 4 equal parts.
 
-    dataset="mist"
-        Applies MPP-based scale correction before
-        the final spatial processing.
+    Parameters
+    ----------
+    src : np.ndarray
+        Source image (H, W, C).
+
+    trg : np.ndarray
+        Target image (H, W, C).
+
+    spatial_mode : str
+        One of: full, downsample, patches.
+
+    dataset : str
+        One of: generic, mist.
+
+    source_mpp : float or None
+        Required for MIST dataset.
+
+    target_mpp : float or None
+        Required for MIST dataset.
 
     Returns
     -------
     tuple
-        (src_processed, trg_processed)
-
-    For:
-        full / downsample
-
-    returns:
-        np.ndarray, np.ndarray
-
-    For:
-        patches
-
-    returns:
-        list[np.ndarray], list[np.ndarray]
+        full / downsample → np.ndarray, np.ndarray
+        patches           → list[np.ndarray], list[np.ndarray]
     """
 
     src_proc = src
@@ -296,61 +277,14 @@ def preprocess_pair_spatial(
     # 2. Spatial processing
     # --------------------------------------------------
 
-    if spatial_mode == "full":
-
-        # Full-resolution image.
-        # If output_size is specified, resize to it.
-
-        if output_size is not None:
-
-            src_proc = resize_to_size(
-                src_proc,
-                output_size,
-            )
-
-            trg_proc = resize_to_size(
-                trg_proc,
-                output_size,
-            )
-
-        return src_proc, trg_proc
-
-    elif spatial_mode == "downsample":
-
-        src_proc = resize_to_size(
-            src_proc,
-            output_size,
-        )
-
-        trg_proc = resize_to_size(
-            trg_proc,
-            output_size,
-        )
+    if spatial_mode in ("full", "downsample"):
 
         return src_proc, trg_proc
 
     elif spatial_mode == "patches":
 
-        # First resize to 512x512
-        src_proc = resize_to_size(
-            src_proc,
-            512,
-        )
-
-        trg_proc = resize_to_size(
-            trg_proc,
-            512,
-        )
-
-        src_patches = split_into_patches(
-            src_proc,
-            patch_size=patch_size,
-        )
-
-        trg_patches = split_into_patches(
-            trg_proc,
-            patch_size=patch_size,
-        )
+        src_patches = split_into_4_patches(src_proc)
+        trg_patches = split_into_4_patches(trg_proc)
 
         return src_patches, trg_patches
 
@@ -360,27 +294,3 @@ def preprocess_pair_spatial(
             f"Unknown spatial_mode: {spatial_mode}. "
             f"Available: full, downsample, patches"
         )
-
-
-def resize_to_size(
-    img,
-    size,
-    resample=Image.BICUBIC,
-):
-    """
-    Resize image to square size x size.
-    """
-
-    if isinstance(size, int):
-        new_h = new_w = size
-    else:
-        new_h, new_w = size
-
-    pil_img = Image.fromarray(img)
-
-    pil_resized = pil_img.resize(
-        (new_w, new_h),
-        resample=resample,
-    )
-
-    return np.array(pil_resized)
