@@ -41,7 +41,7 @@ FOUNDATION_FEATURE_DEPTHS: Dict[str, int] = {
     "hibou_l": 24,
     "phikon": 12,
     "ctranspath_hf": 12,  # Swin-T depths (2,2,6,2)
-    "cpsam": 32,          # SAM ViT-L upper bound; лишние обрежутся
+    "cpsam": 24,          # SAM ViT-L: 24 блока (layer_0..23)
 }
 
 # ---------------------------------------------------------------------------

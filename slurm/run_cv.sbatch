@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=haps_cv
-#SBATCH --partition=gpu
+#SBATCH --partition=ais-gpu
 #SBATCH --nodes=1                                  # node count
 #SBATCH --ntasks-per-node=1                        # total number of tasks per node
 #SBATCH --gpus=1

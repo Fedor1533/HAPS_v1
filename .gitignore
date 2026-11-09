@@ -5,8 +5,10 @@ __pycache__/
 # uv / venv
 .venv/
 .venv-foundation/
+.venv-geom/
 .uv-tmp/
 .uv-cache/
+venv-geom.md
 
 # Результаты экспериментов и отчёты (крупные артефакты не коммитим)
 results/

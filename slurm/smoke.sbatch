@@ -5,9 +5,8 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=24G
 #SBATCH --time=00:30:00
-#SBATCH --output=%x_%j.out
-#SBATCH --error=%x_%j.err
-#
+#SBATCH --output=sbatch_logs/log_%x_%j.txt
+
 # Smoke-тест метрик на нескольких парах (быстро, для проверки окружения/кода).
 #
 # Запуск:
@@ -15,10 +14,10 @@
 # Переопределение параметров:
 #   sbatch --export=ALL,CSV=/path.csv,N=8,METRICS="ncc,cellpose,transpath" smoke.sbatch
 
-export REPO="${REPO:-/trinity/home/vladislav.kozlovskiy/HAPS/HAPS_v1}"
+export REPO="${REPO:-/beegfs/home/f.gubanov/f.gubanov/bimai_lab/HAPS_v1_Vladislav}"
 source "${REPO}/slurm/env.sh"
 
-CSV="${CSV:-/trinity/home/vladislav.kozlovskiy/archieve/filtration_imgs/exp_full_local.csv}"
+CSV="${CSV:-/beegfs/home/f.gubanov/f.gubanov/bimai_lab/filtration_imgs/exp_full.csv}"
 N="${N:-6}"
 METRICS="${METRICS:-ncc,psnr,mi,ssim,ms-ssim,fsim,fsimc,lpips_alex,dists,cellpose,lpips_cellpose}"
 
