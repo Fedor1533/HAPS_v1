@@ -15,6 +15,7 @@ results/
 *.pkl
 *_analysis/
 reports/
+geom_transforms_exp/*.csv
 
 # Slurm-логи
 logs/
